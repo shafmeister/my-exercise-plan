@@ -1,0 +1,31 @@
+.table-workout {
+    margin: 0px 10px 0px 20px;
+    display: table;
+}
+
+.header-row {
+    
+    display: table-row;
+    font-weight: 700;
+}
+
+.header-cell {
+    padding: 10px 20px 10px 20px;
+    display: table-cell;
+    border: 1px solid red;
+}
+
+.body-row {
+    margin: 0px 10px 0px 20px;
+    display: table-row;
+}
+
+.body-cell {
+    padding: 10px 20px 10px 20px;
+    display: table-cell;
+    border: 1px solid red;
+}
+
+.body-input{
+    width: 75px;
+}

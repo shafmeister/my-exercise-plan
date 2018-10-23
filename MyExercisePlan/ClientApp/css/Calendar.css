@@ -1,0 +1,37 @@
+.calendar-header {
+    border: 1px solid black;
+    font-weight: bold;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.calendar-container {
+    border: 1px solid black;
+    padding: 1px;
+    margin-top: 5px;
+}
+
+tr, tbody, table{
+    width: 100%;
+}
+
+th {
+    width: calc(100% /7);
+    text-align: center;
+}
+
+td {
+    vertical-align:text-top;
+    text-align:right;
+    height: 12vw; 
+    border: 1px solid grey;
+    padding: 5px;
+}
+
+.cal-date-noncurr{
+    color: darkgrey;
+}
+
+.cal-date-curr {
+    color: black;
+}
