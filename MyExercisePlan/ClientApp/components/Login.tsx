@@ -19,7 +19,7 @@ export class Login extends React.Component<RouteComponentProps<{}>, {}> {
         const data = new FormData(event.currentTarget);
         var Response: LoginResponse;  
 
-        fetch('login/auth', { method: 'POST', body: data })
+        fetch('api/login/auth', { method: 'POST', body: data })
             .then((response: Response) => response.json()) // Transform the data into json
                 .then(data => {
                     Response = data.value;

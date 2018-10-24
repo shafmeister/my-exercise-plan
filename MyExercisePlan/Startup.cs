@@ -30,6 +30,10 @@ namespace MyExercisePlan
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDataContext>()
                 .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options => options.AccessDeniedPath = "/AccessDenied");
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Login");
+            services.ConfigureApplicationCookie(options => options.LogoutPath = "/Logout");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +54,8 @@ namespace MyExercisePlan
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

@@ -49,39 +49,6 @@ namespace MyExercisePlan.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "U1_USER",
-                columns: table => new
-                {
-                    USER_ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    EMAIL = table.Column<string>(unicode: false, maxLength: 255, nullable: true),
-                    FAILED_ATTEMPTS = table.Column<int>(nullable: true),
-                    FIRSTNAME = table.Column<string>(unicode: false, maxLength: 255, nullable: true),
-                    LASTNAME = table.Column<string>(unicode: false, maxLength: 255, nullable: true),
-                    LOCATION = table.Column<string>(unicode: false, maxLength: 255, nullable: true),
-                    MIDDLENAME = table.Column<string>(unicode: false, maxLength: 255, nullable: true),
-                    PASSWORD = table.Column<string>(unicode: false, maxLength: 255, nullable: true),
-                    USER_ACCESS_ID = table.Column<int>(nullable: true),
-                    USERNAME = table.Column<string>(unicode: false, maxLength: 255, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_U1_USER", x => x.USER_ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "U1_USER_ACCESS",
-                columns: table => new
-                {
-                    USER_ACCESS_ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_U1_USER_ACCESS", x => x.USER_ACCESS_ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -243,12 +210,6 @@ namespace MyExercisePlan.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "U1_USER");
-
-            migrationBuilder.DropTable(
-                name: "U1_USER_ACCESS");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
