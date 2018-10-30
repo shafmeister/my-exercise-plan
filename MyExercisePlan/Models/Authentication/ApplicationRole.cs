@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace MyExercisePlan.Models.Authentication
 {
-    public class ApplicationRole : IdentityRole<int>
+    public class ApplicationRole 
     {
-        public ApplicationRole() : base()
-        {
-        }
+        string Name { get; set; }
 
         public ApplicationRole(string roleName)
         {

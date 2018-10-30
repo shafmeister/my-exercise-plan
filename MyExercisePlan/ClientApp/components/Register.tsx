@@ -3,11 +3,29 @@ import { Link, NavLink } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 
 export class Register extends React.Component<RouteComponentProps<{}>, {}> {
+    constructor() {
+        super();
+        this.state = {
+            RegistrationAttempted: false,
+            RegistrationSuccessful: null,
+            PasswordError: false,
+            Username: ""
+        }
+    };
+
+    SubmitForm(event: React.FormEvent<HTMLFormElement>): void {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+
+        fetch('api/login/register', { method: 'POST', body: data })
+            .then((response) => console.log(response));
+    };
+
     render() {
         return (
             <div className="register-container">
                 <div className="register-form" >
-                    <form action="api/login/auth" method="POST">
+                    <form onSubmit={this.SubmitForm}>
                         <label htmlFor="username">Username</label>
                         <input id="username" name="username"/>
                         <label htmlFor="password">Password</label>

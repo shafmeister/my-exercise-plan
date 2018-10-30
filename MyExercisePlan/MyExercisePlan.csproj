@@ -32,6 +32,13 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\SampleDataController.cs" />
+    <Compile Remove="Entities\AspNetRoleClaims.cs" />
+    <Compile Remove="Entities\AspNetRoles.cs" />
+    <Compile Remove="Entities\AspNetUserClaims.cs" />
+    <Compile Remove="Entities\AspNetUserLogins.cs" />
+    <Compile Remove="Entities\AspNetUserRoles.cs" />
+    <Compile Remove="Entities\AspNetUsers.cs" />
+    <Compile Remove="Entities\AspNetUserTokens.cs" />
     <Compile Remove="Models\Authentication\User.cs" />
   </ItemGroup>
 

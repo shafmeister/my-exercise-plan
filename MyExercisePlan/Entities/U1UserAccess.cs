@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MyExercisePlan.Models
+namespace MyExercisePlan.Entities
 {
     public partial class U1UserAccess
     {

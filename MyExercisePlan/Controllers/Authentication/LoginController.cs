@@ -5,23 +5,23 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyExercisePlan.Controllers.Authentication;
 using MyExercisePlan.Models.Authentication;
+using MyExercisePlan.ViewModels.Authentication;
 
 namespace WorkoutTracker.Controllers.Authentication
 {
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
-        private SignInManager<ApplicationUser> _signManager;
-        private UserManager<ApplicationUser> _userManager;
+        private LoginManager _loginManager;
+        private UserManager _userManager;
 
-        public LoginController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signManager)
+        public LoginController(UserManager userManager, LoginManager loginManager)
         {
             _userManager = userManager;
-            _signManager = signManager;
+            _loginManager = loginManager;
         }
 
         // GET: login/auth
@@ -38,34 +38,25 @@ namespace WorkoutTracker.Controllers.Authentication
             return "value";
         }
 
-        // POST api/login/auth
-        [HttpPost("auth")]
-        public IActionResult Auth([FromForm]string Username, [FromForm]string Password)
-        {
-            ApplicationUser user = new ApplicationUser { UserName = Username };
-            var result = _userManager.CreateAsync(user, Password);
-            LoginResponse Response = LoginResponse.AuthenticateUser(Username, Password);
-
-            return Ok(Json(Response));
-        }
 
         // POST api/login/register
         [HttpPost("register")]
-        public IActionResult Register([FromForm]string Username, [FromForm]string Password)
+        public IActionResult Register(RegisterViewModel viewModel)
         {
-            ApplicationUser user = new ApplicationUser { UserName = Username };
-            var result = _userManager.CreateAsync(user, Password);
+            ApplicationUser user = new ApplicationUser(0, viewModel.Username, viewModel.Password, viewModel.Firstname, viewModel.Middlename, viewModel.Lastname, viewModel.State, viewModel.City);
+            ApplicationUser result = _userManager.CreateUser(user);
 
-            if (result.IsCompletedSuccessfully)
+            if (result.IsPersisted())
             {
-                _signManager.SignInAsync(user, false);
+                Console.WriteLine("Successful");
+                //_signManager.SignInAsync(user, false);
                 return Redirect("Home");
             }
-            if (result.IsFaulted)
+            else
             {
-
+                Console.WriteLine("Faulted");
+                return Redirect("Login");
             }
-            return BadRequest();
         }
 
         // PUT api/<controller>/5
