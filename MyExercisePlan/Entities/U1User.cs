@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using MyExercisePlan.Entities;
 
 namespace MyExercisePlan.Entities
@@ -13,7 +14,8 @@ namespace MyExercisePlan.Entities
         public string Middlename { get; set; }
         public string Lastname { get; set; }
         public string Email { get; set; }
-        public string Location { get; set; }
+        public string State { get; set; }
+        public string City { get; set; }
         public int? FailedAttempts { get; set; }
         public int? UserAccessId { get; set; }
 
@@ -47,8 +49,9 @@ namespace MyExercisePlan.Entities
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine("Error adding user: " + user.Username);
-                Console.Error.Write(ex.Message);
+                Debug.Print("Error adding user: " + user.Username);
+                Debug.Print(ex.Message);
+                Debug.Print(ex.InnerException.ToString());
                 return new U1User();
             }
         }

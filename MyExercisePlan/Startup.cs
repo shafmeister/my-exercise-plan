@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyExercisePlan.Models.Authentication;
-using MyExercisePlan.Models;
+using MyExercisePlan.Entities;
 
 namespace MyExercisePlan
 {
@@ -27,13 +27,14 @@ namespace MyExercisePlan
         {
             services.AddMvc();
 
-            services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
+            /*services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDataContext>()
                 .AddDefaultTokenProviders();
 
             services.ConfigureApplicationCookie(options => options.AccessDeniedPath = "/AccessDenied");
             services.ConfigureApplicationCookie(options => options.LoginPath = "/Login");
             services.ConfigureApplicationCookie(options => options.LogoutPath = "/Logout");
+            */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

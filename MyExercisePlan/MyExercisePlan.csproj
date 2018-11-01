@@ -39,6 +39,10 @@
     <Compile Remove="Entities\AspNetUserRoles.cs" />
     <Compile Remove="Entities\AspNetUsers.cs" />
     <Compile Remove="Entities\AspNetUserTokens.cs" />
+    <Compile Remove="Migrations\20181023034654_Identity.cs" />
+    <Compile Remove="Migrations\20181023034654_Identity.Designer.cs" />
+    <Compile Remove="Migrations\ApplicationDataContextModelSnapshot.cs" />
+    <Compile Remove="Models\Authentication\LoginModel.cs" />
     <Compile Remove="Models\Authentication\User.cs" />
   </ItemGroup>
 
@@ -46,6 +50,10 @@
     <None Remove="ClientApp\components\Counter.tsx" />
     <None Remove="ClientApp\components\FetchData.tsx" />
     <None Remove="ClientApp\routesold.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

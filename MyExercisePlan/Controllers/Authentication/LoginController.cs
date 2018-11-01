@@ -15,14 +15,16 @@ namespace WorkoutTracker.Controllers.Authentication
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
-        private LoginManager _loginManager;
-        private UserManager _userManager;
+        private LoginManager _loginManager = new LoginManager();
+        private UserManager _userManager = new UserManager();
 
+        /*
         public LoginController(UserManager userManager, LoginManager loginManager)
         {
             _userManager = userManager;
             _loginManager = loginManager;
         }
+        */
 
         // GET: login/auth
         [HttpGet]

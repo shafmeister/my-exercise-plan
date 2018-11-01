@@ -4,9 +4,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MyExercisePlan.Entities
 {
-    public class ApplicationDataContext : DbContext
+    public partial class ApplicationDataContext : DbContext
     {
-        
         public virtual DbSet<U1User> U1User { get; set; }
         public virtual DbSet<U1UserAccess> U1UserAccess { get; set; }
 
@@ -14,12 +13,13 @@ namespace MyExercisePlan.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=WorkoutPlan;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        { 
+        {
             modelBuilder.Entity<U1User>(entity =>
             {
                 entity.HasKey(e => e.UserId);
@@ -27,6 +27,11 @@ namespace MyExercisePlan.Entities
                 entity.ToTable("U1_USER");
 
                 entity.Property(e => e.UserId).HasColumnName("USER_ID");
+
+                entity.Property(e => e.City)
+                    .HasColumnName("CITY")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Email)
                     .HasColumnName("EMAIL")
@@ -45,11 +50,6 @@ namespace MyExercisePlan.Entities
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Location)
-                    .HasColumnName("LOCATION")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Middlename)
                     .HasColumnName("MIDDLENAME")
                     .HasMaxLength(255)
@@ -57,6 +57,11 @@ namespace MyExercisePlan.Entities
 
                 entity.Property(e => e.Password)
                     .HasColumnName("PASSWORD")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.State)
+                    .HasColumnName("STATE")
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
