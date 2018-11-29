@@ -173,3 +173,62 @@ body {
     width: 100%;
     height: 100%;
 }
+
+.register-input {
+    margin: 0px 10px 10px 10px;
+}
+
+.password-status {
+    float:right;
+}
+
+@media only screen and (min-width: 600px) {
+    .register-container {
+        width:550px;
+    }
+}
+
+.password-container {
+    position: relative;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    height: 75px;
+}
+
+/* The actual popup */
+    .password-container .password-tooltip {
+        font-size: .9em;
+        width: 160px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px 0;
+        position: absolute;
+        z-index: 1;
+        top: 15%;
+        left: 125%;
+        margin-left: -80px;
+        text-align: left;
+        padding: 10px;
+    }
+
+/* Popup arrow */
+        .password-container .password-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            margin-bottom: 5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent #555 transparent transparent;
+        }
+
+.icon-small{
+    width: 15px;
+    height: 15px;
+}

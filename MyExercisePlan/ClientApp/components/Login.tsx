@@ -24,6 +24,7 @@ export class Login extends React.Component<RouteComponentProps<{}>, {}> {
                 .then(data => {
                     Response = data.value;
                     console.log(Response);
+                    console.log(Response.responseVM.LoginSuccessful);
                     this.setState({
                         LoginAttempted: true,
                         LoginSuccess: Response.responseVM.LoginSuccessful,

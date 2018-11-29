@@ -15,4 +15,15 @@ namespace MyExercisePlan.ViewModels.Authentication
         public string City { get; set; }
         public string State { get; set; }
     }
+
+    public class RegisterResponseModel
+    {
+        public Boolean RegistrationSuccess { get; set; }
+        public string FailureMessage { get; set; }
+
+        public RegisterResponseModel(Boolean registrationSuccess, string failureMessage) {
+            RegistrationSuccess = registrationSuccess;
+            FailureMessage = failureMessage;
+        }
+    }
 }

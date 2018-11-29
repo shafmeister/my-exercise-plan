@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using MyExercisePlan.Entities;
 
 namespace MyExercisePlan.Entities
@@ -36,23 +37,61 @@ namespace MyExercisePlan.Entities
 
         }
 
-        public U1User AddToDb(U1User user)
+        public Boolean AddToDb()
         {
             try
             {
                 using (ApplicationDataContext _db = new ApplicationDataContext())
                 {
-                    _db.U1User.Add(user);
+                    _db.U1User.Add(this);
                     _db.SaveChanges();
-                    return user;
+                    return true;
                 }
             }
             catch (Exception ex)
             {
-                Debug.Print("Error adding user: " + user.Username);
+                Debug.Print("Error adding user: " + this.Username);
                 Debug.Print(ex.Message);
                 Debug.Print(ex.InnerException.ToString());
-                return new U1User();
+                return false;
+            }
+        }
+
+        public Boolean Authenticate(string username, string password)
+        {
+            ApplicationDataContext _db = new ApplicationDataContext();
+            int UserCount = _db.U1User.Where(r => r.Username == username && r.Password == password).Count();
+            if (UserCount > 1)
+            {
+                Debug.Print("Multiple users with the same username found");
+                return false;
+            }
+            if (UserCount == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Boolean Exists(string username)
+        {
+            ApplicationDataContext _db = new ApplicationDataContext();
+            int UserCount = _db.U1User.Where(r => r.Username == username).Count();
+            if (UserCount > 1)
+            {
+                Debug.Print("Multiple users with the same username found");
+                return false;
+            }
+            else if(UserCount == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

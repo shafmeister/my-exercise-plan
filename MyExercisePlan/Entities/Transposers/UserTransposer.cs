@@ -28,7 +28,7 @@ namespace MyExercisePlan.Entities.Transposers
 
         public U1User TransposeModel(ApplicationUser user)
         {
-            //Create new ApplicationUser from U1User Entity
+            //Create new U1User Entity from ApplicationUser
             U1User dbUser = new U1User
                 (
                     user.UserID,

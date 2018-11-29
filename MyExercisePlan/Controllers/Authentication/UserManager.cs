@@ -15,17 +15,15 @@ namespace MyExercisePlan.Controllers.Authentication
         ApplicationDataContext _db = new ApplicationDataContext();
         U1User _user = new U1User();
 
-        public ApplicationUser CreateUser(ApplicationUser newUser)
+        public Boolean CreateUser(ApplicationUser newUser)
         {
             //Convert Application User Model into Entity Framework Model
             U1User User = _userTransposer.TransposeModel(newUser);
 
             //Attempt to create user in db
-            User = _user.AddToDb(User);
+            Boolean UserCreated = User.AddToDb();
 
-            //Convert user returned by AddToDb method back to Application User Model
-            ApplicationUser CreatedUser = _userTransposer.TransposeEntity(User);
-            return CreatedUser;
+            return UserCreated;
         }
 
         public ApplicationUser UpdateUser()

@@ -43,21 +43,23 @@ namespace WorkoutTracker.Controllers.Authentication
 
         // POST api/login/register
         [HttpPost("register")]
-        public IActionResult Register(RegisterViewModel viewModel)
+        public JsonResult Register(RegisterViewModel viewModel)
         {
             ApplicationUser user = new ApplicationUser(0, viewModel.Username, viewModel.Password, viewModel.Firstname, viewModel.Middlename, viewModel.Lastname, viewModel.State, viewModel.City);
-            ApplicationUser result = _userManager.CreateUser(user);
+            Boolean result = _userManager.CreateUser(user);
 
-            if (result.IsPersisted())
+            if (result)
             {
                 Console.WriteLine("Successful");
                 //_signManager.SignInAsync(user, false);
-                return Redirect("Home");
+                RegisterResponseModel response = new RegisterResponseModel(true, "");
+                return Json(response);
             }
             else
             {
                 Console.WriteLine("Faulted");
-                return Redirect("Login");
+                RegisterResponseModel response = new RegisterResponseModel(false, "An error occured:(");
+                return Json(response);
             }
         }
 
