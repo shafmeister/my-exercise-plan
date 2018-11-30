@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace MyExercisePlan.ViewModels.Authentication
 {
@@ -19,11 +20,11 @@ namespace MyExercisePlan.ViewModels.Authentication
     public class RegisterResponseModel
     {
         public Boolean RegistrationSuccess { get; set; }
-        public string FailureMessage { get; set; }
+        public String Token { get; set; }
 
-        public RegisterResponseModel(Boolean registrationSuccess, string failureMessage) {
+        public RegisterResponseModel(Boolean registrationSuccess, String token) {
             RegistrationSuccess = registrationSuccess;
-            FailureMessage = failureMessage;
+            Token = token;
         }
     }
 }

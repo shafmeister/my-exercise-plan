@@ -28,15 +28,21 @@ export class Register extends React.Component<RouteComponentProps<{}> & Register
         var Response: RegisterResponse;
         if (this.state.PasswordsMatch && this.state.PasswordLength && this.state.PasswordSymbols && this.state.PasswordLetters && this.state.PasswordNumbers) {
             fetch('api/login/register', { method: 'POST', body: data })
-                .then((response: Response) => response.json()) // Transform the data into json
-                    .then(data => {
-                        Response = data;
+                .then((response: Response) => {
+                    console.log(response);
+                    if (response.status == 200) {
                         this.setState({
                             RegistrationAttempted: true,
-                            RegistrationSuccessful: Response.registrationSuccess,
-                            ErrorMessage: Response.failureMessage
+                            RegistrationSuccessful: true
                         });
-                    });
+                    }
+                    else {
+                        this.setState({
+                            RegistrationAttempted: true,
+                            RegistrationSuccessful: false
+                        });
+                    }
+                })
         }
     };
 
@@ -193,5 +199,5 @@ interface RegisterState {
 
 interface RegisterResponse {
     registrationSuccess: boolean,
-    failureMessage: string
+    token: string
 }

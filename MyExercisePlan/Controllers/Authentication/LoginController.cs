@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 using MyExercisePlan.Controllers.Authentication;
 using MyExercisePlan.Models.Authentication;
 using MyExercisePlan.ViewModels.Authentication;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Net.Http.Headers;
+using System.Diagnostics;
 
 namespace WorkoutTracker.Controllers.Authentication
 {
@@ -43,23 +46,25 @@ namespace WorkoutTracker.Controllers.Authentication
 
         // POST api/login/register
         [HttpPost("register")]
-        public JsonResult Register(RegisterViewModel viewModel)
+        public HttpResponseMessage Register(RegisterViewModel viewModel)
         {
             ApplicationUser user = new ApplicationUser(0, viewModel.Username, viewModel.Password, viewModel.Firstname, viewModel.Middlename, viewModel.Lastname, viewModel.State, viewModel.City);
-            Boolean result = _userManager.CreateUser(user);
+            Boolean UserCreated = _userManager.CreateUser(user);
 
-            if (result)
+            if (UserCreated)
             {
-                Console.WriteLine("Successful");
-                //_signManager.SignInAsync(user, false);
-                RegisterResponseModel response = new RegisterResponseModel(true, "");
-                return Json(response);
+                Debug.Print("------------------------Successful");
+                String token = _userManager.SignIn(viewModel.Username, null, true);
+                HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
+                Cookie tokenCookie = new Cookie("access_token", token);
+                responseMessage.Headers.Add("access_token", tokenCookie.ToString());
+                return responseMessage;
             }
             else
             {
-                Console.WriteLine("Faulted");
-                RegisterResponseModel response = new RegisterResponseModel(false, "An error occured:(");
-                return Json(response);
+                Debug.Print("------------------------Faulted");
+                HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.Forbidden);
+                return responseMessage;
             }
         }
 

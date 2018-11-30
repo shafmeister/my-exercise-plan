@@ -5,11 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using MyExercisePlan.Models.Authentication;
+using MyExercisePlan.Entities;
+using System.Diagnostics;
 
 namespace MyExercisePlan.Controllers.Authentication
 {
     public class LoginManager
     {
+
+        
 
         public Boolean AuthenticateUser(string username, string password)
         {

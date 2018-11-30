@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyExercisePlan.Models.Authentication;
 using MyExercisePlan.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace MyExercisePlan
 {
@@ -56,7 +57,7 @@ namespace MyExercisePlan
 
             app.UseStaticFiles();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

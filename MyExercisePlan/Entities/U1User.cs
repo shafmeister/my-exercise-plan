@@ -37,7 +37,7 @@ namespace MyExercisePlan.Entities
 
         }
 
-        public Boolean AddToDb()
+        public Boolean Create()
         {
             try
             {
@@ -50,47 +50,44 @@ namespace MyExercisePlan.Entities
             }
             catch (Exception ex)
             {
-                Debug.Print("Error adding user: " + this.Username);
+                //TODO Log error 
+                Debug.Print("Error adding user: " + Username);
                 Debug.Print(ex.Message);
                 Debug.Print(ex.InnerException.ToString());
                 return false;
             }
         }
 
-        public Boolean Authenticate(string username, string password)
+        public Boolean Exists()
         {
-            ApplicationDataContext _db = new ApplicationDataContext();
-            int UserCount = _db.U1User.Where(r => r.Username == username && r.Password == password).Count();
-            if (UserCount > 1)
+            try
             {
-                Debug.Print("Multiple users with the same username found");
-                return false;
+                using (ApplicationDataContext _db = new ApplicationDataContext())
+                {
+                    int UserCount = _db.U1User.Where(r => r.Username == Username).Count();
+                    Console.WriteLine(UserCount);
+                    if (UserCount > 1)
+                    {
+                        //TODO Log error 
+                        Debug.Print("Multiple users with the same username found");
+                        return true;
+                    }
+                    else if (UserCount == 1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
             }
-            if (UserCount == 1)
+            catch (Exception ex)
             {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public Boolean Exists(string username)
-        {
-            ApplicationDataContext _db = new ApplicationDataContext();
-            int UserCount = _db.U1User.Where(r => r.Username == username).Count();
-            if (UserCount > 1)
-            {
-                Debug.Print("Multiple users with the same username found");
-                return false;
-            }
-            else if(UserCount == 1)
-            {
-                return true;
-            }
-            else
-            {
+                //TODO Log error 
+                Debug.Print("Error adding user: " + Username);
+                Debug.Print(ex.Message);
+                Debug.Print(ex.InnerException.ToString());
                 return false;
             }
         }
