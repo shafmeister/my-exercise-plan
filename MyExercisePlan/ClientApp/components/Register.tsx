@@ -25,24 +25,16 @@ export class Register extends React.Component<RouteComponentProps<{}> & Register
     SubmitForm(event: React.FormEvent<HTMLFormElement>): void {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        var Response: RegisterResponse;
         if (this.state.PasswordsMatch && this.state.PasswordLength && this.state.PasswordSymbols && this.state.PasswordLetters && this.state.PasswordNumbers) {
             fetch('api/login/register', { method: 'POST', body: data })
-                .then((response: Response) => {
-                    console.log(response);
-                    if (response.status == 200) {
-                        this.setState({
-                            RegistrationAttempted: true,
-                            RegistrationSuccessful: true
-                        });
-                    }
-                    else {
-                        this.setState({
-                            RegistrationAttempted: true,
-                            RegistrationSuccessful: false
-                        });
-                    }
-                })
+                .then((response: Response) => response.json()) // Transform the data into json
+                .then((data: RegisterResponse) => {
+                    this.setState({
+                        RegistrationAttempted: true,
+                        RegistrationSuccessful: data.registrationSuccess,
+                        ErrorMessage: data.errorMessage
+                    });
+                });
         }
     };
 
@@ -199,5 +191,5 @@ interface RegisterState {
 
 interface RegisterResponse {
     registrationSuccess: boolean,
-    token: string
+    errorMessage: string
 }

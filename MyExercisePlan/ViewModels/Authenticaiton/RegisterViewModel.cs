@@ -20,11 +20,11 @@ namespace MyExercisePlan.ViewModels.Authentication
     public class RegisterResponseModel
     {
         public Boolean RegistrationSuccess { get; set; }
-        public String Token { get; set; }
+        public String ErrorMessage { get; set; }
 
-        public RegisterResponseModel(Boolean registrationSuccess, String token) {
+        public RegisterResponseModel(Boolean registrationSuccess, String errorMessage) {
             RegistrationSuccess = registrationSuccess;
-            Token = token;
+            ErrorMessage = errorMessage;
         }
     }
 }

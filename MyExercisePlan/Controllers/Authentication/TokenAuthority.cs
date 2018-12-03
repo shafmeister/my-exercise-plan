@@ -33,5 +33,24 @@ namespace MyExercisePlan.Controllers.Authentication
             return token;
         }
 
+        public static string GetTokenClaims(string token)
+        {
+            byte[] symmetricKey = Convert.FromBase64String(Secret);
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+
+            SecurityToken tokenS = tokenHandler.ReadToken(token);
+
+            //Validate and return token claims
+            TokenValidationParameters validations = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(symmetricKey),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+            var claims = tokenHandler.ValidateToken(token, validations, out tokenS);
+            return claims.Identity.Name;
+        }
+
     }
 }

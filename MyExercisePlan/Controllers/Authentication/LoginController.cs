@@ -46,7 +46,7 @@ namespace WorkoutTracker.Controllers.Authentication
 
         // POST api/login/register
         [HttpPost("register")]
-        public HttpResponseMessage Register(RegisterViewModel viewModel)
+        public JsonResult Register(RegisterViewModel viewModel)
         {
             ApplicationUser user = new ApplicationUser(0, viewModel.Username, viewModel.Password, viewModel.Firstname, viewModel.Middlename, viewModel.Lastname, viewModel.State, viewModel.City);
             Boolean UserCreated = _userManager.CreateUser(user);
@@ -54,17 +54,27 @@ namespace WorkoutTracker.Controllers.Authentication
             if (UserCreated)
             {
                 Debug.Print("------------------------Successful");
+                //Create and attach token
                 String token = _userManager.SignIn(viewModel.Username, null, true);
-                HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
-                Cookie tokenCookie = new Cookie("access_token", token);
-                responseMessage.Headers.Add("access_token", tokenCookie.ToString());
-                return responseMessage;
+               if(token != null)
+                {
+                    Cookie tokenCookie = new Cookie("access_token", token);
+                    Debug.WriteLine("--------------");
+                    Debug.WriteLine(token);
+                    Debug.WriteLine("--------------");
+                    Response.Cookies.Append("access_token", token);
+                }
+
+                //Create response data and send
+                RegisterResponseModel response = new RegisterResponseModel(true, "");
+                return Json(response);
             }
             else
             {
                 Debug.Print("------------------------Faulted");
-                HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.Forbidden);
-                return responseMessage;
+                //Create response data and send
+                RegisterResponseModel response = new RegisterResponseModel(false, "Username is already taken");
+                return Json(response);
             }
         }
 
