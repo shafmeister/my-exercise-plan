@@ -17,14 +17,4 @@ namespace MyExercisePlan.ViewModels.Authentication
         public string State { get; set; }
     }
 
-    public class RegisterResponseModel
-    {
-        public Boolean RegistrationSuccess { get; set; }
-        public String ErrorMessage { get; set; }
-
-        public RegisterResponseModel(Boolean registrationSuccess, String errorMessage) {
-            RegistrationSuccess = registrationSuccess;
-            ErrorMessage = errorMessage;
-        }
-    }
 }

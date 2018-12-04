@@ -34,7 +34,7 @@ namespace MyExercisePlan.Controllers.Authentication
 
         public String SignIn(string username, string password, Boolean internalSignIn)
         {
-            //Internal SignIn directly after registration, no password needed
+            //Internal Signin directly after registration, no password needed
             if (internalSignIn)
             {
                 return TokenAuthority.GenerateToken(username);

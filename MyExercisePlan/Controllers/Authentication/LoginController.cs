@@ -18,16 +18,7 @@ namespace WorkoutTracker.Controllers.Authentication
     [Route("api/[controller]")]
     public class LoginController : Controller
     {
-        private LoginManager _loginManager = new LoginManager();
         private UserManager _userManager = new UserManager();
-
-        /*
-        public LoginController(UserManager userManager, LoginManager loginManager)
-        {
-            _userManager = userManager;
-            _loginManager = loginManager;
-        }
-        */
 
         // GET: login/auth
         [HttpGet]
@@ -37,8 +28,8 @@ namespace WorkoutTracker.Controllers.Authentication
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("login")]
+        public string Login(LoginViewModel viewModel)
         {
             return "value";
         }
@@ -53,28 +44,19 @@ namespace WorkoutTracker.Controllers.Authentication
 
             if (UserCreated)
             {
-                Debug.Print("------------------------Successful");
-                //Create and attach token
-                String token = _userManager.SignIn(viewModel.Username, null, true);
-               if(token != null)
-                {
-                    Cookie tokenCookie = new Cookie("access_token", token);
-                    Debug.WriteLine("--------------");
-                    Debug.WriteLine(token);
-                    Debug.WriteLine("--------------");
-                    Response.Cookies.Append("access_token", token);
-                }
-
-                //Create response data and send
-                RegisterResponseModel response = new RegisterResponseModel(true, "");
-                return Json(response);
+                //Signin user, create token and attach to response
+                String token = _userManager.SignIn(viewModel.Username, null, false);
+                Response.Cookies.Append("access_token", token);
+                
+                //Create response model and send
+                RegisterResponseModel SuccessResponse = new RegisterResponseModel(true, "");
+                return Json(SuccessResponse);
             }
             else
             {
-                Debug.Print("------------------------Faulted");
-                //Create response data and send
-                RegisterResponseModel response = new RegisterResponseModel(false, "Username is already taken");
-                return Json(response);
+                //Create response model and send
+                RegisterResponseModel RegistrationFailureResponse = new RegisterResponseModel(false, "Username is already taken");
+                return Json(RegistrationFailureResponse);
             }
         }
 
