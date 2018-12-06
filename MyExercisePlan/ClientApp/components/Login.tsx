@@ -2,14 +2,15 @@
 import { Link, NavLink } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import { UserStatus } from 'ClientApp/components/UserStatus';
+import { Redirect } from "react-router-dom";
 
-export class Login extends React.Component<RouteComponentProps<{}>, {}> {
+export class Login extends React.Component<RouteComponentProps<{}> & LoginProps, LoginState> {
     constructor() {
         super();
         this.state = {
             LoginAttempted: false,
             LoginSuccess: false,
-            Username: ""
+            FailedAttempts: 0
         };
         this.SubmitForm = this.SubmitForm.bind(this);
     };
@@ -17,23 +18,25 @@ export class Login extends React.Component<RouteComponentProps<{}>, {}> {
     SubmitForm(event: React.FormEvent<HTMLFormElement>): void {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        var Response: LoginResponse;  
 
-        fetch('api/login/auth', { method: 'POST', body: data })
+        fetch('api/authentication/login', { method: 'POST', body: data })
             .then((response: Response) => response.json()) // Transform the data into json
-                .then(data => {
-                    Response = data.value;
-                    console.log(Response);
-                    console.log(Response.responseVM.LoginSuccessful);
+                .then((data: LoginResponse) => {
+                    console.log(data);
+                    console.log(data.loginSuccess);
+                    console.log(data.failedAttempts);
                     this.setState({
                         LoginAttempted: true,
-                        LoginSuccess: Response.responseVM.LoginSuccessful,
-                        Username: Response.userVM.Username
+                        LoginSuccess: data.loginSuccess,
+                        FailedAttempts: data.failedAttempts
                     });
                 });       
     };
 
     render() {
+        if (this.state.LoginSuccess == true) {
+            return (<Redirect to='/Dashboard' />)
+        }
         return (
             <div className="login-container">
                 <div className="login-form" >
@@ -55,21 +58,17 @@ export class Login extends React.Component<RouteComponentProps<{}>, {}> {
 }
 
 interface LoginResponse {
-    userVM: UserViewModel,
-    responseVM: ResponseViewModel
+    loginSuccess: boolean,
+    errorMessage: string,
+    failedAttempts: number
 }
 
-interface ResponseViewModel {
-    LoginSuccessful: boolean,
-    //Message to display in the user interface
-    ResponseMessage: string,
+interface LoginState {
+    LoginAttempted: boolean,
+    LoginSuccess: boolean,
     FailedAttempts: number
 }
 
-interface UserViewModel {
-    Username: string,
-    Firstname: string,
-    Lastname: string,
-    ActiveNotifications: number
-}
+interface LoginProps {
 
+}

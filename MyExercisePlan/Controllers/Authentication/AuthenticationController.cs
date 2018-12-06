@@ -16,7 +16,7 @@ using System.Diagnostics;
 namespace WorkoutTracker.Controllers.Authentication
 {
     [Route("api/[controller]")]
-    public class LoginController : Controller
+    public class AuthenticationController : Controller
     {
         private UserManager _userManager = new UserManager();
 
@@ -27,13 +27,27 @@ namespace WorkoutTracker.Controllers.Authentication
             return new string[] { "It", "works" };
         }
 
-        // GET api/<controller>/5
+        // GET api/login/login
         [HttpPost("login")]
-        public string Login(LoginViewModel viewModel)
+        public JsonResult Login(LoginViewModel viewModel)
         {
-            return "value";
-        }
+            //Attempt to Signin user and create token
+            String token = _userManager.SignIn(viewModel.Username, viewModel.Password, false);
 
+            if(token != null)
+            {
+                //Attach cookie, create response model and send
+                Response.Cookies.Append("access_token", token);
+                LoginResponseModel SuccessResponse = new LoginResponseModel(true, "");
+                return Json(SuccessResponse);
+            }
+            else
+            {
+                //Create response model and send
+                LoginResponseModel FailureResponse = new LoginResponseModel(false, "Username and/or password is incorrect.");
+                return Json(FailureResponse);
+            }
+        }
 
         // POST api/login/register
         [HttpPost("register")]
@@ -55,7 +69,7 @@ namespace WorkoutTracker.Controllers.Authentication
             else
             {
                 //Create response model and send
-                RegisterResponseModel RegistrationFailureResponse = new RegisterResponseModel(false, "Username is already taken");
+                RegisterResponseModel RegistrationFailureResponse = new RegisterResponseModel(false, "Username is already taken.");
                 return Json(RegistrationFailureResponse);
             }
         }

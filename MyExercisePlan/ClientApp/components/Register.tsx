@@ -26,7 +26,7 @@ export class Register extends React.Component<RouteComponentProps<{}> & Register
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         if (this.state.PasswordsMatch && this.state.PasswordLength && this.state.PasswordSymbols && this.state.PasswordLetters && this.state.PasswordNumbers) {
-            fetch('api/login/register', { method: 'POST', body: data })
+            fetch('api/authentication/register', { method: 'POST', body: data })
                 .then((response: Response) => response.json()) // Transform the data into json
                 .then((data: RegisterResponse) => {
                     this.setState({
