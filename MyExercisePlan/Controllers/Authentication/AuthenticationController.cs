@@ -12,6 +12,7 @@ using MyExercisePlan.ViewModels.Authentication;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Net.Http.Headers;
 using System.Diagnostics;
+using MyExercisePlan.Models.User;
 
 namespace WorkoutTracker.Controllers.Authentication
 {
@@ -21,10 +22,34 @@ namespace WorkoutTracker.Controllers.Authentication
         private UserManager _userManager = new UserManager();
 
         // GET: login/auth
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("getuserinfo")]
+        public JsonResult GetUserInfo()
         {
-            return new string[] { "It", "works" };
+            string accessToken = Request.Cookies["access_token"];
+            if (accessToken != null)
+            {
+                string Username = TokenAuthority.GetTokenClaims(accessToken);
+                if(Username != null)
+                {
+                    UserNotification notification = new UserNotification(1, "Test", "This is a test", 3);
+                    List<UserNotification> notificationList = new List<UserNotification>();
+                    notificationList.Add(notification);
+                    UserinfoResponseModel SuccessResponse = new UserinfoResponseModel(true, Username, notificationList);
+                    return Json(SuccessResponse);
+                }
+                else
+                {
+                    UserinfoResponseModel AuthenticationFailureResponse = new UserinfoResponseModel(false, "", null);
+                    return Json(AuthenticationFailureResponse);
+                }
+            }
+            else
+            {
+                UserinfoResponseModel NoTokenResponse = new UserinfoResponseModel(false, "", null);
+                return Json(NoTokenResponse);
+            }
+
+            
         }
 
         // GET api/login/login
@@ -59,7 +84,7 @@ namespace WorkoutTracker.Controllers.Authentication
             if (UserCreated)
             {
                 //Signin user, create token and attach to response
-                String token = _userManager.SignIn(viewModel.Username, null, false);
+                String token = _userManager.SignIn(viewModel.Username, null, true);
                 Response.Cookies.Append("access_token", token);
                 
                 //Create response model and send

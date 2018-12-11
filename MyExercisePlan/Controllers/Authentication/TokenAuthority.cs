@@ -48,6 +48,7 @@ namespace MyExercisePlan.Controllers.Authentication
                 ValidateIssuer = false,
                 ValidateAudience = false
             };
+            #warning Handle invalid token
             var claims = tokenHandler.ValidateToken(token, validations, out tokenS);
             return claims.Identity.Name;
         }

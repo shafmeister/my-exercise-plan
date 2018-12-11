@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { NavMenu } from './NavMenu';
+import NavMenu from './NavMenu';
 import { Calendar } from './Calendar';
 import { SimpleWorkout } from './WorkoutSimple';
 import { Form } from './Form';
 import { RouteComponentProps } from 'react-router';
+import { Route, Redirect } from 'react-router-dom'
 
 export interface LayoutProps {
     children?: React.ReactNode;
@@ -12,7 +13,7 @@ export interface LayoutProps {
 export class Layout extends React.Component<LayoutProps, {}> {
     public render() {
         return <div className='container-fluid'>
-                <NavMenu />
+            <Route path="/" component={NavMenu} />
             <div>
                 
             </div>

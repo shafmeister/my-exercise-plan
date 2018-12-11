@@ -50,10 +50,18 @@
     <None Remove="ClientApp\components\Counter.tsx" />
     <None Remove="ClientApp\components\FetchData.tsx" />
     <None Remove="ClientApp\routesold.tsx" />
+    <None Remove="ClientApp\store\Counter.ts" />
+    <None Remove="ClientApp\store\NavMenu.ts" />
+    <None Remove="ClientApp\store\WeatherForecasts.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\NewFolder\" />
     <Folder Include="Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\store\NavMenu.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

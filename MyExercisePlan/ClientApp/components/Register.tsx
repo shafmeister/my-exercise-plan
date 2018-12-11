@@ -4,19 +4,20 @@ import { RouteComponentProps } from 'react-router';
 import { Redirect } from "react-router-dom";
 var greenCheck = require('../images/greenCheck.jpg');
 var redX = require('../images/redX.png');
+import { ApplicationState } from '../store';
 
 export class Register extends React.Component<RouteComponentProps<{}> & RegisterProps, RegisterState> {
     constructor() {
         super();
         this.state = {
-            RegistrationAttempted: false,
-            RegistrationSuccessful: false,
             ErrorMessage: '',
             PasswordsMatch: true,
             PasswordLength: false,
             PasswordSymbols: false,
             PasswordLetters: false,
-            PasswordNumbers: false
+            PasswordNumbers: false,
+            RegistrationAttempted: false,
+            RegistrationSuccessful: false
         }
         this.SubmitForm = this.SubmitForm.bind(this);
         this.validatePassword = this.validatePassword.bind(this);
@@ -30,11 +31,12 @@ export class Register extends React.Component<RouteComponentProps<{}> & Register
                 .then((response: Response) => response.json()) // Transform the data into json
                 .then((data: RegisterResponse) => {
                     this.setState({
+                        ErrorMessage: data.errorMessage,
                         RegistrationAttempted: true,
-                        RegistrationSuccessful: data.registrationSuccess,
-                        ErrorMessage: data.errorMessage
+                        RegistrationSuccessful: data.registrationSuccess
                     });
                 });
+
         }
     };
 
@@ -45,7 +47,7 @@ export class Register extends React.Component<RouteComponentProps<{}> & Register
         var LetterRegex = /((?=.*[A-Za-z]).*)/;
         var SymbolRegex = /((?=.*[)(!@#$%^&*_]).*)/;
         var NumberRegex = /((?=.*\d).*)/;
-        
+
         this.setState({
             PasswordsMatch: Password == PasswordConfirm,
             PasswordLength: LengthRegex.test(Password),
@@ -165,7 +167,7 @@ export class Register extends React.Component<RouteComponentProps<{}> & Register
                     
                 </div>
                 <div>
-                    Errors go here
+                    {this.state.ErrorMessage}
                 </div>
                 Already have an account?
                 <Link className="" to="/login"><input type="submit" value="Login" /></Link>
@@ -191,5 +193,6 @@ interface RegisterState {
 
 interface RegisterResponse {
     registrationSuccess: boolean,
-    errorMessage: string
+    errorMessage: string,
+    userName: string
 }

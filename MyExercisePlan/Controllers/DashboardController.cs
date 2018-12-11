@@ -22,9 +22,6 @@ namespace MyExercisePlan.Controllers
         public JsonResult Test()
         {
             string accessToken = Request.Cookies["access_token"];
-            Debug.WriteLine("--------------");
-            Debug.WriteLine(accessToken);
-            Debug.WriteLine("--------------");
             if (accessToken != null)
             {
                 string Username = TokenAuthority.GetTokenClaims(accessToken);
@@ -34,7 +31,6 @@ namespace MyExercisePlan.Controllers
             {
                 return Json(new DashboardResponseModel("Token not validated"));
             }
-            
         }
         
 
