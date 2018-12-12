@@ -42,6 +42,7 @@ class NavMenu extends React.Component<NavMenuProps, stateNavMenu> {
         this.state = {
             sideNavOpen: false
         };
+        this.GetUserInfo = this.GetUserInfo.bind(this);
     }
 
     toggleSideNav() {
@@ -49,7 +50,7 @@ class NavMenu extends React.Component<NavMenuProps, stateNavMenu> {
         console.log(this.props.NotificationCount);
     }
 
-    componentDidMount() {
+    GetUserInfo() {
         fetch('api/authentication/getuserinfo', { method: 'GET' })
             .then((response: Response) => response.json())
             .then((data: UserInfoResponse) => {
@@ -57,6 +58,10 @@ class NavMenu extends React.Component<NavMenuProps, stateNavMenu> {
             });
     }
 
+    componentDidMount() {
+        var updateUserInfo = setInterval(this.GetUserInfo, 5000) 
+    }
+    
     public render() {
         return (
             <div className='main-nav'>
