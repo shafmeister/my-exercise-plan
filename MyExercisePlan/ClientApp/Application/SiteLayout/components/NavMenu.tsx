@@ -5,11 +5,11 @@ import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 //redux objects
 import { connect } from 'react-redux';
-import { ApplicationState } from '../store';
+import { ApplicationState } from '../../../store';
 import * as NavMenuStore from '../store/NavMenu'
 //images
-var menuTop = require('../images/menuIcon.png');
-var menuBottom = require('../images/menuIconHover.png');
+var menuTop = require('../../../assets/images/menuIcon.png');
+var menuBottom = require('../../../assets/images/menuIconHover.png');
 //other components
 import { UserStatus } from './UserStatus'
 //types

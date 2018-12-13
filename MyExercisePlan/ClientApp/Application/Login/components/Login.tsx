@@ -1,7 +1,6 @@
 ﻿import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-import { UserStatus } from 'ClientApp/components/UserStatus';
 import { Redirect } from "react-router-dom";
 
 export class Login extends React.Component<RouteComponentProps<{}> & LoginProps, LoginState> {

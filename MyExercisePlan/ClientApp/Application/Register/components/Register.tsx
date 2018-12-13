@@ -2,9 +2,9 @@
 import { Link, NavLink } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import { Redirect } from "react-router-dom";
-var greenCheck = require('../images/greenCheck.jpg');
-var redX = require('../images/redX.png');
-import { ApplicationState } from '../store';
+var greenCheck = require('../../../assets/images/greenCheck.jpg');
+var redX = require('../../../assets/images/redX.png');
+import { ApplicationState } from '../../../store';
 
 export class Register extends React.Component<RouteComponentProps<{}> & RegisterProps, RegisterState> {
     constructor() {

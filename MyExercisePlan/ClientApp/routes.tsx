@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { Dashboard } from './components/Dashboard';
+import { Layout } from './Application/SiteLayout/components/Layout';
+import { Home } from './Application/Home/components/Home';
+import { Dashboard } from './Application/Dashboard/components/Dashboard';
 import { Form } from './components/Form';
-import { Login } from './components/Login';
-import { Register } from './components/Register';
-import { Calendar } from './components/Calendar';
+import { Login } from './Application/Login/components/Login';
+import { Register } from './Application/Register/components/Register';
+import { Calendar } from './Application/Dashboard/components/Calendar';
 
 export const routes = <Layout>
     <Route exact path='/' component={Home} />

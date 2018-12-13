@@ -1,10 +1,10 @@
 import * as React from 'react';
-import * as Constants from './Constants';
+import * as Constants from '../../../components/Constants';
 import { RouteComponentProps } from 'react-router';
-import { daysOfWeek, daysOfWeekShort } from './Constants';
-var goalFail = require('../images/goalFail.png');
-var goalPending = require('../images/goalPending.png');
-var goalMet = require('../images/goalMet.png');
+import { daysOfWeek, daysOfWeekShort } from '../../../components/Constants';
+var goalFail = require('../../../assets/images/goalFail.png');
+var goalPending = require('../../../assets/images/goalPending.png');
+var goalMet = require('../../../assets/images/goalMet.png');
 
 export class Calendar extends React.Component<RouteComponentProps<{}>, {}> {
     constructor() {

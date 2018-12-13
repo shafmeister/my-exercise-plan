@@ -1,4 +1,4 @@
-import * as NavMenu from './NavMenu';
+import * as NavMenu from '../Application/SiteLayout/store/NavMenu';
 
 // The top-level state object
 export interface ApplicationState {

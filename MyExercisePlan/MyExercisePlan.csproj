@@ -56,12 +56,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\Application\Dashboard\store\" />
+    <Folder Include="ClientApp\Application\Dashboard\types\" />
+    <Folder Include="ClientApp\Application\Home\store\" />
+    <Folder Include="ClientApp\Application\Home\types\" />
+    <Folder Include="ClientApp\Application\Login\types\" />
+    <Folder Include="ClientApp\Application\Login\store\" />
+    <Folder Include="ClientApp\Application\Register\store\" />
+    <Folder Include="ClientApp\Application\Register\types\" />
+    <Folder Include="ClientApp\Application\SiteLayout\types\" />
     <Folder Include="Controllers\NewFolder\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\store\NavMenu.ts" />
+    <TypeScriptCompile Include="ClientApp\Application\SiteLayout\store\NavMenu.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

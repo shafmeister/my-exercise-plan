@@ -1,8 +1,5 @@
 import * as React from 'react';
 import NavMenu from './NavMenu';
-import { Calendar } from './Calendar';
-import { SimpleWorkout } from './WorkoutSimple';
-import { Form } from './Form';
 import { RouteComponentProps } from 'react-router';
 import { Route, Redirect } from 'react-router-dom'
 
