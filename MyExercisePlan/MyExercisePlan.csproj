@@ -70,7 +70,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\Application\SiteLayout\store\NavMenu.ts" />
+    <TypeScriptCompile Include="ClientApp\Application\SiteLayout\store\UserStatus.ts" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

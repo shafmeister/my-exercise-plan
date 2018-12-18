@@ -6,18 +6,12 @@ import { Link, NavLink } from 'react-router-dom';
 //redux objects
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../../store';
-import * as NavMenuStore from '../store/NavMenu'
 //images
 var menuTop = require('../../../assets/images/menuIcon.png');
 var menuBottom = require('../../../assets/images/menuIconHover.png');
 //other components
 import { UserStatus } from './UserStatus'
 //types
-
-type NavMenuProps =
-    NavMenuStore.NavMenuState
-    & typeof NavMenuStore.actionCreators
-    & RouteComponentProps<{}>;
 
 interface stateNavMenu {
     sideNavOpen: boolean
@@ -36,7 +30,7 @@ interface UserNotification {
     severity: number
 }
 
-class NavMenu extends React.Component<NavMenuProps, stateNavMenu> {
+export default class NavMenu extends React.Component<RouteComponentProps<{}>, stateNavMenu> {
     constructor() {
         super();
         this.state = {
@@ -47,7 +41,6 @@ class NavMenu extends React.Component<NavMenuProps, stateNavMenu> {
 
     toggleSideNav() {
         this.setState({ sideNavOpen: !this.state.sideNavOpen });
-        console.log(this.props.NotificationCount);
     }
 
     GetUserInfo() {
@@ -56,10 +49,6 @@ class NavMenu extends React.Component<NavMenuProps, stateNavMenu> {
             .then((data: UserInfoResponse) => {
                 this.props.setusername(data.username);
             });
-    }
-
-    componentDidMount() {
-        var updateUserInfo = setInterval(this.GetUserInfo, 5000) 
     }
     
     public render() {
@@ -73,13 +62,7 @@ class NavMenu extends React.Component<NavMenuProps, stateNavMenu> {
                     <div className='navbar-header'>
                         <Link className='navbar-brand' to={ '/' }>WorkoutTracker</Link>
                 </div>
-                
-                <button onClick={this.props.decrement} > Decrement count </button>
-                <button onClick={this.props.clear} > Clear count </button>
-                {this.props.Username
-                    ? (this.props.Username)
-                    : ('Sign in')}
-                    <UserStatus />
+                <UserStatus />
                 
             </div>
         );
@@ -119,15 +102,3 @@ const MenuSideBar: React.SFC<propsMenuSideBar> = (props) => {
     }
 };
 
-function mapStateToProps(state: NavMenuStore.NavMenuState) {
-    return {
-        username: state.Username,
-        NotificationCount: state.NotificationCount
-    }
-}
-
-export default connect(
-    //mapStateToProps,
-    (state: ApplicationState) => state.navMenu, 
-    NavMenuStore.actionCreators
-)(NavMenu as any) as typeof NavMenu;
