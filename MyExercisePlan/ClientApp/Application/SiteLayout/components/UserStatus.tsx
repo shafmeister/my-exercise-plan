@@ -15,18 +15,49 @@ type UserStatusProps =
     & RouteComponentProps<{}>;
 ;
 
+interface UserInfoResponse {
+    authenticationSuccess: boolean,
+    username: string,
+    notifications: UserNotification[]
+}
+
+interface UserNotification {
+    userNotificationID: number,
+    title: string,
+    description: string,
+    severity: number
+}
+
 export class UserStatus extends React.Component<UserStatusProps, stateUserStatus>{
     constructor() {
         super();
         this.state = {
-            hasWebToken: false
+            hasWebToken: false,
+            UserStatusInterval: null
         }
     }
+
+    UpdateUserStatus() {
+        fetch('api/authentication/getuserinfo', { method: 'GET' })
+            .then((response: Response) => response.json())
+            .then((data: UserInfoResponse) => {
+                this.props.setusername(data.username);
+                console.log(data.username);
+                console.log(this.props.Username);
+                this.props.decrement();
+            });
+    }
+
+    componentDidMount() {
+        this.state.UserStatusInterval = setInterval(this.UpdateUserStatus(), 500);
+    }
+
     render() {
-        if (this.state.hasWebToken) {
+        if (this.props.Username !== '') {
             return (
                 <div className="user-status">
-                    User status here
+                    Welcome {this.props.Username}!
+                    <br/> {this.props.NotificationCount}
                 </div>
             )
         }
@@ -41,7 +72,8 @@ export class UserStatus extends React.Component<UserStatusProps, stateUserStatus
 }
 
 interface stateUserStatus {
-    hasWebToken: boolean
+    hasWebToken: boolean,
+    UserStatusInterval?: Function
 }
 
 function mapStateToProps(state: UserStatusStore.UserStatusState) {
@@ -51,8 +83,8 @@ function mapStateToProps(state: UserStatusStore.UserStatusState) {
     }
 }
 
-export default connect(
+export const ConnectedUserStatus = connect(
     //mapStateToProps,
-    (state: ApplicationState) => state.navMenu,
+    (state: ApplicationState) => state.userStatus,
     UserStatusStore.actionCreators
-)(UserStatus as any) as typeof UserStatus;
+)(UserStatus as any);

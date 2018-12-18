@@ -10,7 +10,7 @@ import { ApplicationState } from '../../../store';
 var menuTop = require('../../../assets/images/menuIcon.png');
 var menuBottom = require('../../../assets/images/menuIconHover.png');
 //other components
-import { UserStatus } from './UserStatus'
+import { UserStatus, ConnectedUserStatus } from './UserStatus'
 //types
 
 interface stateNavMenu {
@@ -36,19 +36,10 @@ export default class NavMenu extends React.Component<RouteComponentProps<{}>, st
         this.state = {
             sideNavOpen: false
         };
-        this.GetUserInfo = this.GetUserInfo.bind(this);
     }
 
     toggleSideNav() {
         this.setState({ sideNavOpen: !this.state.sideNavOpen });
-    }
-
-    GetUserInfo() {
-        fetch('api/authentication/getuserinfo', { method: 'GET' })
-            .then((response: Response) => response.json())
-            .then((data: UserInfoResponse) => {
-                this.props.setusername(data.username);
-            });
     }
     
     public render() {
@@ -62,7 +53,7 @@ export default class NavMenu extends React.Component<RouteComponentProps<{}>, st
                     <div className='navbar-header'>
                         <Link className='navbar-brand' to={ '/' }>WorkoutTracker</Link>
                 </div>
-                <UserStatus />
+                <ConnectedUserStatus />
                 
             </div>
         );
