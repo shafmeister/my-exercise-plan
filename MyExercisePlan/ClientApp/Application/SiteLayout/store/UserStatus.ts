@@ -7,7 +7,7 @@ export interface UserStatusState {
 }
 
 //
-const initialState = { Username: '', NotificationCount: 0 }
+const initialState = { Username: '', NotificationCount: 0}
 
 //ACTIONS
 interface DecrementNotificationAction { type: 'DECREMENT_NOTIFICATIONCOUNT' }

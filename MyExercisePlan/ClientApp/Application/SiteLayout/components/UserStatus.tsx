@@ -4,37 +4,36 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 //redux
+import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../../store';
-import * as UserStatusStore from '../store/UserStatus';
+import { UserStatusState, actionCreators } from '../store/UserStatus';
 //types
 
-type UserStatusProps = 
-    UserStatusStore.UserStatusState
-    & typeof UserStatusStore.actionCreators
-    & RouteComponentProps<{}>;
-;
-
-interface UserInfoResponse {
-    authenticationSuccess: boolean,
-    username: string,
-    notifications: UserNotification[]
+export interface OwnProps {
+    tester: string
 }
 
-interface UserNotification {
-    userNotificationID: number,
-    title: string,
-    description: string,
-    severity: number
+interface StateProps {
+    Username: string,
+    NotificationCount: number
 }
 
-export class UserStatus extends React.Component<UserStatusProps, stateUserStatus>{
+interface DispatchProps {
+    decrement: () => void,
+    setusername: (username: string) => void
+}
+
+type Props = StateProps & DispatchProps & OwnProps & RouteComponentProps<{}>;
+
+export class UserStatus extends React.Component<Props, stateUserStatus>{
     constructor() {
         super();
         this.state = {
             hasWebToken: false,
-            UserStatusInterval: null
+            UserStatusInterval: undefined
         }
+        this.UpdateUserStatus.bind(this);
     }
 
     UpdateUserStatus() {
@@ -49,7 +48,7 @@ export class UserStatus extends React.Component<UserStatusProps, stateUserStatus
     }
 
     componentDidMount() {
-        this.state.UserStatusInterval = setInterval(this.UpdateUserStatus(), 500);
+        setInterval(this.UpdateUserStatus, 5000);
     }
 
     render() {
@@ -76,15 +75,36 @@ interface stateUserStatus {
     UserStatusInterval?: Function
 }
 
-function mapStateToProps(state: UserStatusStore.UserStatusState) {
+interface State {
+    internalComponentStateField: string
+}
+
+interface UserInfoResponse {
+    authenticationSuccess: boolean,
+    username: string,
+    notifications: UserNotification[]
+}
+
+interface UserNotification {
+    userNotificationID: number,
+    title: string,
+    description: string,
+    severity: number
+}
+
+function mapStateToProps(state: UserStatusState): StateProps {
     return {
-        username: state.Username,
+        Username: state.Username,
         NotificationCount: state.NotificationCount
     }
 }
 
-export const ConnectedUserStatus = connect(
-    //mapStateToProps,
-    (state: ApplicationState) => state.userStatus,
-    UserStatusStore.actionCreators
-)(UserStatus as any);
+function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
+    return {
+        decrement: actionCreators.decrement,
+        setusername: actionCreators.setusername
+    }
+}
+
+export default connect<StateProps, DispatchProps, OwnProps>
+    (mapStateToProps, mapDispatchToProps) (UserStatus);

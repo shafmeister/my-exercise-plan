@@ -10,7 +10,7 @@ import { ApplicationState } from '../../../store';
 var menuTop = require('../../../assets/images/menuIcon.png');
 var menuBottom = require('../../../assets/images/menuIconHover.png');
 //other components
-import { UserStatus, ConnectedUserStatus } from './UserStatus'
+import { UserStatus } from './UserStatus'
 //types
 
 interface stateNavMenu {
@@ -53,7 +53,7 @@ export default class NavMenu extends React.Component<RouteComponentProps<{}>, st
                     <div className='navbar-header'>
                         <Link className='navbar-brand' to={ '/' }>WorkoutTracker</Link>
                 </div>
-                <ConnectedUserStatus />
+                <UserStatus />
                 
             </div>
         );
