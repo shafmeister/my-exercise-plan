@@ -39,5 +39,5 @@ export const reducer: Reducer<UserStatusState> = (state: UserStatusState = initi
         default:
             const exhaustiveCheck: never = action;
     }
-    return state || Object.assign({}, state, { NotificationCount: 0 }) ;
+    return state || Object.assign({}, state, { UserName: '', NotificationCount: 0 }) ;
 }

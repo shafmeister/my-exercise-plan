@@ -11,7 +11,7 @@ import { UserStatusState, actionCreators } from '../store/UserStatus';
 //types
 
 export interface OwnProps {
-    tester: string
+    
 }
 
 interface StateProps {
@@ -26,24 +26,24 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps & OwnProps & RouteComponentProps<{}>;
 
-export class UserStatus extends React.Component<Props, stateUserStatus>{
-    constructor() {
-        super();
+class UserStatus extends React.Component<Props, stateUserStatus>{
+    constructor(props: Props) {
+        super(props);
         this.state = {
             hasWebToken: false,
             UserStatusInterval: undefined
         }
-        this.UpdateUserStatus.bind(this);
+        this.UpdateUserStatus = this.UpdateUserStatus.bind(this);
     }
 
-    UpdateUserStatus() {
+    UpdateUserStatus(props: Props) {
         fetch('api/authentication/getuserinfo', { method: 'GET' })
             .then((response: Response) => response.json())
             .then((data: UserInfoResponse) => {
-                this.props.setusername(data.username);
                 console.log(data.username);
-                console.log(this.props.Username);
+                this.props.setusername(data.username);
                 this.props.decrement();
+                console.log(this.props.Username + "Poop");
             });
     }
 
@@ -52,6 +52,8 @@ export class UserStatus extends React.Component<Props, stateUserStatus>{
     }
 
     render() {
+        console.log("**** FORM print props");
+        console.log(this.props);
         if (this.props.Username !== '') {
             return (
                 <div className="user-status">
@@ -92,19 +94,21 @@ interface UserNotification {
     severity: number
 }
 
-function mapStateToProps(state: UserStatusState): StateProps {
+function mapStateToProps(state: ApplicationState): StateProps {
+    console.log("statemapped");
     return {
-        Username: state.Username,
-        NotificationCount: state.NotificationCount
+        Username: state.userStatus.Username,
+        NotificationCount: state.userStatus.NotificationCount
     }
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
+    console.log("dispatchmapped");
     return {
-        decrement: actionCreators.decrement,
-        setusername: actionCreators.setusername
+        decrement: () => dispatch(actionCreators.decrement()),
+        setusername: (username: string) => dispatch(actionCreators.setusername(username))
     }
 }
 
-export default connect<StateProps, DispatchProps, OwnProps>
-    (mapStateToProps, mapDispatchToProps) (UserStatus);
+export const UserStatusContainer = connect<StateProps, DispatchProps, OwnProps>
+    (mapStateToProps, mapDispatchToProps)(UserStatus as any);
