@@ -11,17 +11,19 @@ const initialState = { Username: '', NotificationCount: 0}
 
 //ACTIONS
 interface DecrementNotificationAction { type: 'DECREMENT_NOTIFICATIONCOUNT' }
+interface IncrementNotificationAction { type: 'INCREMENT_NOTIFICATIONCOUNT' }
 interface ClearNotificationAction { type: 'CLEAR_NOTIFICATIONCOUNT' }
 interface SetUsernameAction { type: 'SET_USERNAME', username: string }
 
 
 //Known action type, to exclude unknown action calls
-type KnownAction = DecrementNotificationAction | ClearNotificationAction | SetUsernameAction;
+type KnownAction = DecrementNotificationAction | IncrementNotificationAction | ClearNotificationAction | SetUsernameAction;
 
 
 //ACTION CREATORS
 export const actionCreators = {
     decrement: () => <DecrementNotificationAction>{ type: 'DECREMENT_NOTIFICATIONCOUNT' },
+    increment: () => <IncrementNotificationAction>{ type: 'INCREMENT_NOTIFICATIONCOUNT' },
     clear: () => <ClearNotificationAction>{ type: 'CLEAR_NOTIFICATIONCOUNT' },
     setusername: (username: string) => <SetUsernameAction>{ type: 'SET_USERNAME', username }
 }
@@ -31,7 +33,9 @@ export const actionCreators = {
 export const reducer: Reducer<UserStatusState> = (state: UserStatusState = initialState, action: KnownAction) => {
     switch (action.type) {
         case ('DECREMENT_NOTIFICATIONCOUNT'):
-            return Object.assign({}, state, { NotificationCount: state.NotificationCount - 1 } ) 
+            return Object.assign({}, state, { NotificationCount: state.NotificationCount - 1 }) 
+        case ('INCREMENT_NOTIFICATIONCOUNT'):
+            return Object.assign({}, state, { NotificationCount: state.NotificationCount + 1 }) 
         case ('CLEAR_NOTIFICATIONCOUNT'):
             return Object.assign({}, state, { NotificationCount: 0 }) 
         case ('SET_USERNAME'):

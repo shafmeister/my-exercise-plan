@@ -232,3 +232,23 @@ body {
     width: 15px;
     height: 15px;
 }
+
+.notification-circle {
+    position: absolute; 
+    vertical-align: 50px;
+    z-index: 2;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    background: red;
+    border: 1px solid white;
+    color: white;
+    top: 25px;
+    text-align:center;
+    display: inline-block;
+}
+
+.notification-number-container {
+    display: inline-block;
+    vertical-align: middle;
+}

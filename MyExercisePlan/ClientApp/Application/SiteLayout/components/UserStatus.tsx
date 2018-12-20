@@ -21,6 +21,7 @@ interface StateProps {
 
 interface DispatchProps {
     decrement: () => void,
+    increment: () => void,
     setusername: (username: string) => void
 }
 
@@ -40,10 +41,8 @@ class UserStatus extends React.Component<Props, stateUserStatus>{
         fetch('api/authentication/getuserinfo', { method: 'GET' })
             .then((response: Response) => response.json())
             .then((data: UserInfoResponse) => {
-                console.log(data.username);
                 this.props.setusername(data.username);
-                this.props.decrement();
-                console.log(this.props.Username + "Poop");
+                this.props.increment();
             });
     }
 
@@ -52,13 +51,13 @@ class UserStatus extends React.Component<Props, stateUserStatus>{
     }
 
     render() {
-        console.log("**** FORM print props");
-        console.log(this.props);
         if (this.props.Username !== '') {
             return (
                 <div className="user-status">
                     Welcome {this.props.Username}!
-                    <br/> {this.props.NotificationCount}
+                    <div className="notification-circle">
+                        <span className="notification-number-container">{this.props.NotificationCount}</span>
+                    </div>
                 </div>
             )
         }
@@ -95,7 +94,6 @@ interface UserNotification {
 }
 
 function mapStateToProps(state: ApplicationState): StateProps {
-    console.log("statemapped");
     return {
         Username: state.userStatus.Username,
         NotificationCount: state.userStatus.NotificationCount
@@ -103,9 +101,9 @@ function mapStateToProps(state: ApplicationState): StateProps {
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
-    console.log("dispatchmapped");
     return {
         decrement: () => dispatch(actionCreators.decrement()),
+        increment: () => dispatch(actionCreators.increment()),
         setusername: (username: string) => dispatch(actionCreators.setusername(username))
     }
 }
