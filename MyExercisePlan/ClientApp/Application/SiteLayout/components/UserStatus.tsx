@@ -8,6 +8,8 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../../store';
 import { UserStatusState, actionCreators } from '../store/UserStatus';
+//images
+var notificationBell = require('../../../assets/images/notificationBell.jpg');
 //types
 
 export interface OwnProps {
@@ -54,9 +56,14 @@ class UserStatus extends React.Component<Props, stateUserStatus>{
         if (this.props.Username !== '') {
             return (
                 <div className="user-status">
-                    Welcome {this.props.Username}!
-                    <div className="notification-circle">
-                        <span className="notification-number-container">{this.props.NotificationCount}</span>
+                    <div className="greeting-container">
+                        Welcome {this.props.Username}!
+                    </div>
+                    <div className="notification-bell-container">
+                        <img className="notification-bell" src={String(notificationBell)} />
+                        <div className="notification-circle">
+                            <span className="notification-number-container">{this.props.NotificationCount}</span>
+                        </div>
                     </div>
                 </div>
             )

@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -40,7 +41,6 @@ namespace MyExercisePlan.Controllers.Authentication
 
             SecurityToken tokenS = tokenHandler.ReadToken(token);
 
-            //Validate and return token claims
             TokenValidationParameters validations = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
@@ -48,9 +48,27 @@ namespace MyExercisePlan.Controllers.Authentication
                 ValidateIssuer = false,
                 ValidateAudience = false
             };
-            #warning Handle invalid token
-            var claims = tokenHandler.ValidateToken(token, validations, out tokenS);
-            return claims.Identity.Name;
+
+            try
+            {
+                ClaimsPrincipal claims = tokenHandler.ValidateToken(token, validations, out tokenS);
+                Debug.WriteLine("--------------------Name is:" + claims.Identity.Name);
+                if (claims.Identity.Name != "")
+                {
+                    return claims.Identity.Name;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                //TODO Log error
+                Debug.WriteLine(ex.InnerException);
+
+            }
+            return null;
         }
 
     }

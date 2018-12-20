@@ -25,7 +25,29 @@ namespace MyExercisePlan.Controllers
             if (accessToken != null)
             {
                 string Username = TokenAuthority.GetTokenClaims(accessToken);
-                return Json(new DashboardResponseModel("Token validated, Username = " + Username));
+                if (Username != null)
+                {
+                    DashboardResponseModel SuccessResponse = new DashboardResponseModel("Token validated, Username = " + Username);
+                    return Json(SuccessResponse);
+                }
+                else
+                {
+                    DashboardResponseModel AuthenticationFailureResponse = new DashboardResponseModel("Token not validated");
+                    return Json(AuthenticationFailureResponse);
+                }
+            }
+            else
+            {
+                DashboardResponseModel NoTokenResponse = new DashboardResponseModel("No Token Provided");
+                return Json(NoTokenResponse);
+            }
+
+
+            
+            if (accessToken != null)
+            {
+                string Username = TokenAuthority.GetTokenClaims(accessToken);
+                
             }
             else
             {
