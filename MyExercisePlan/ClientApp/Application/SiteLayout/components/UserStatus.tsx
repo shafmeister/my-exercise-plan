@@ -10,6 +10,7 @@ import { ApplicationState } from '../../../store';
 import { UserStatusState, actionCreators } from '../store/UserStatus';
 //images
 var notificationBell = require('../../../assets/images/notificationBell.jpg');
+var greySettingsGear = require('../../../assets/images/greySettingsGear.png');
 //types
 
 export interface OwnProps {
@@ -27,16 +28,22 @@ interface DispatchProps {
     setusername: (username: string) => void
 }
 
+interface LocalState {
+    NotificationPaneOpen: boolean,
+    UserDetailsPaneOpen: boolean
+}
+
 type Props = StateProps & DispatchProps & OwnProps & RouteComponentProps<{}>;
 
-class UserStatus extends React.Component<Props, stateUserStatus>{
+class UserStatus extends React.Component<Props, LocalState>{
     constructor(props: Props) {
         super(props);
         this.state = {
-            hasWebToken: false,
-            UserStatusInterval: undefined
+            NotificationPaneOpen: false,
+            UserDetailsPaneOpen: false
         }
         this.UpdateUserStatus = this.UpdateUserStatus.bind(this);
+        this.ToggleNotificationVisibility = this.ToggleNotificationVisibility.bind(this);
     }
 
     UpdateUserStatus(props: Props) {
@@ -52,8 +59,10 @@ class UserStatus extends React.Component<Props, stateUserStatus>{
         setInterval(this.UpdateUserStatus, 5000);
     }
 
-    ToggleVisibility() {
-
+    ToggleNotificationVisibility() {
+        this.setState({
+            NotificationPaneOpen: !this.state.NotificationPaneOpen
+        });
     }
 
     render() {
@@ -63,15 +72,24 @@ class UserStatus extends React.Component<Props, stateUserStatus>{
                     <div className="greeting-container">
                         Welcome {this.props.Username}!
                     </div>
-                    <div className="notification-bell-container">
-                        <img className="notification-bell" src={String(notificationBell)} onClick={this.ToggleVisibility()}/>
+                    <div className="notification-bell-container" onClick={this.ToggleNotificationVisibility}>
+                        <img className="notification-bell" src={String(notificationBell)} />
                         <div className="notification-circle">
-                            <span className="notification-number-container">{this.props.NotificationCount}</span>
-                        </div>
-                        <div className="notification-pane hidden">
-
+                            <span className="notification-number-container">
+                                {this.props.NotificationCount}
+                            </span>
                         </div>
                     </div>
+                    <img className="notification-bell" src={String(greySettingsGear)} />
+                    {
+                        this.state.NotificationPaneOpen ? (
+                            <div className="notification-pane hidden">
+                            </div>
+                        ) : (
+                                <div className="notification-pane fade-in-short">
+                                </div>
+                            )
+                    }
                 </div>
             )
         }
@@ -85,10 +103,6 @@ class UserStatus extends React.Component<Props, stateUserStatus>{
     }
 }
 
-interface stateUserStatus {
-    hasWebToken: boolean,
-    UserStatusInterval?: Function
-}
 
 interface State {
     internalComponentStateField: string
