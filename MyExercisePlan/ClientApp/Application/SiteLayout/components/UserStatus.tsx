@@ -52,6 +52,10 @@ class UserStatus extends React.Component<Props, stateUserStatus>{
         setInterval(this.UpdateUserStatus, 5000);
     }
 
+    ToggleVisibility() {
+
+    }
+
     render() {
         if (this.props.Username !== '') {
             return (
@@ -60,9 +64,12 @@ class UserStatus extends React.Component<Props, stateUserStatus>{
                         Welcome {this.props.Username}!
                     </div>
                     <div className="notification-bell-container">
-                        <img className="notification-bell" src={String(notificationBell)} />
+                        <img className="notification-bell" src={String(notificationBell)} onClick={this.ToggleVisibility()}/>
                         <div className="notification-circle">
                             <span className="notification-number-container">{this.props.NotificationCount}</span>
+                        </div>
+                        <div className="notification-pane hidden">
+
                         </div>
                     </div>
                 </div>

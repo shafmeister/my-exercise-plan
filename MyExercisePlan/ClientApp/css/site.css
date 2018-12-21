@@ -223,18 +223,22 @@ body {
 }
 
 .notification-circle {
-    position: absolute; 
+    position: absolute;
     vertical-align: 50px;
     z-index: 2;
     border-radius: 50%;
-    width: 25px;
-    height: 25px;
     background: red;
     border: 1px solid white;
     color: white;
-    top: 25px;
-    text-align:center;
-    display: inline-block;
+    top: 7px;
+    right: 7px;
+    text-align: center;
+    //display: inline-block;
+    font-size: 7pt;
+    min-width: 15px;
+    max-height: 16px;
+    padding: 0px 1px 1px 1px;
+    cursor: pointer;
 }
 
 .notification-number-container {
@@ -242,9 +246,11 @@ body {
     vertical-align: middle;
 }
 
-.notification-bell{
-    width: 45px;
-    height: 45px;
+.notification-bell {
+    width: 36px;
+    height: 36px;
+    margin: 7px;
+    cursor: pointer;
 }
 
 .notification-bell-container {
@@ -266,4 +272,14 @@ body {
     color: darkgrey;
     justify-content: center;
     flex-direction: column; /* column | row */
+}
+
+.notification-pane{
+    background-color: red;
+    width: 250px;
+    height: 150px;
+    position: absolute;
+    z-index: 2;
+    top: 50px;
+    right: 0px;
 }
