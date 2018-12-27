@@ -80,13 +80,15 @@ class UserStatus extends React.Component<Props, LocalState>{
                             </span>
                         </div>
                     </div>
-                    <img className="notification-bell" src={String(greySettingsGear)} />
+                    <div className="notification-bell-container" onClick={this.ToggleNotificationVisibility}>
+                        <img className="notification-bell" src={String(greySettingsGear)} />
+                    </div>
                     {
                         this.state.NotificationPaneOpen ? (
-                            <div className="notification-pane hidden">
+                            <div className="notification-pane fade-in-short">
                             </div>
                         ) : (
-                                <div className="notification-pane fade-in-short">
+                                <div className="notification-pane hidden">
                                 </div>
                             )
                     }

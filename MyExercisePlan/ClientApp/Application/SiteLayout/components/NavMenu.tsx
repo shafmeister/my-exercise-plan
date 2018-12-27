@@ -50,7 +50,7 @@ export default class NavMenu extends React.Component<RouteComponentProps<{}>, st
                         <img className='menu-top' src={String(menuTop)} />
                     </div>
                     <MenuSideBar isVisible={this.state.sideNavOpen} />
-                    <div className='navbar-header'>
+                    <div>
                         <Link className='navbar-brand' to={ '/' }>WorkoutTracker</Link>
                 </div>
                 <UserStatusContainer />
