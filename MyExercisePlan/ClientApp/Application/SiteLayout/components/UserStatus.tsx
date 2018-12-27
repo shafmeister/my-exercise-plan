@@ -14,7 +14,7 @@ var greySettingsGear = require('../../../assets/images/greySettingsGear.png');
 //types
 
 export interface OwnProps {
-    
+
 }
 
 interface StateProps {
@@ -44,6 +44,7 @@ class UserStatus extends React.Component<Props, LocalState>{
         }
         this.UpdateUserStatus = this.UpdateUserStatus.bind(this);
         this.ToggleNotificationVisibility = this.ToggleNotificationVisibility.bind(this);
+        this.ToggleUserDetailsVisibility = this.ToggleUserDetailsVisibility.bind(this);
     }
 
     UpdateUserStatus(props: Props) {
@@ -52,16 +53,25 @@ class UserStatus extends React.Component<Props, LocalState>{
             .then((data: UserInfoResponse) => {
                 this.props.setusername(data.username);
                 this.props.increment();
+                console.log("Username: " + data.username);
             });
     }
 
     componentDidMount() {
-        setInterval(this.UpdateUserStatus, 5000);
+        this.UpdateUserStatus;
     }
 
     ToggleNotificationVisibility() {
         this.setState({
-            NotificationPaneOpen: !this.state.NotificationPaneOpen
+            NotificationPaneOpen: !this.state.NotificationPaneOpen,
+            UserDetailsPaneOpen: false
+        });
+    }
+
+    ToggleUserDetailsVisibility() {
+        this.setState({
+            NotificationPaneOpen: false,
+            UserDetailsPaneOpen: !this.state.UserDetailsPaneOpen
         });
     }
 
@@ -80,7 +90,7 @@ class UserStatus extends React.Component<Props, LocalState>{
                             </span>
                         </div>
                     </div>
-                    <div className="notification-bell-container" onClick={this.ToggleNotificationVisibility}>
+                    <div className="notification-bell-container" onClick={this.ToggleUserDetailsVisibility}>
                         <img className="notification-bell" src={String(greySettingsGear)} />
                     </div>
                     {
