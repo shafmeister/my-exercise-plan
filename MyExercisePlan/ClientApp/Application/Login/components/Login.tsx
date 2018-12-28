@@ -1,9 +1,29 @@
-﻿import * as React from 'react';
+﻿//react
+import * as React from 'react';
+//route objects
 import { Link, NavLink } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { Redirect } from "react-router-dom";
+//redux
+import * as Redux from 'redux';
+import { connect } from 'react-redux';
+import { UserStatusState, actionCreators } from '../../SiteLayout/store/UserStatus';
 
-export class Login extends React.Component<RouteComponentProps<{}> & LoginProps, LoginState> {
+interface OwnProps {
+
+}
+
+interface StateProps {
+
+}
+
+interface DispatchProps {
+    setusername: (username: string) => void
+}
+
+type Props = OwnProps & StateProps & DispatchProps & RouteComponentProps<{}>;
+
+class Login extends React.Component<Props, LoginState> {
     constructor() {
         super();
         this.state = {
@@ -29,6 +49,9 @@ export class Login extends React.Component<RouteComponentProps<{}> & LoginProps,
                         LoginSuccess: data.loginSuccess,
                         FailedAttempts: data.failedAttempts
                     });
+                    if (data.loginSuccess) {
+                        this.props.setusername(data.username);
+                    }
                 });       
     };
 
@@ -59,6 +82,7 @@ export class Login extends React.Component<RouteComponentProps<{}> & LoginProps,
 interface LoginResponse {
     loginSuccess: boolean,
     errorMessage: string,
+    username: string,
     failedAttempts: number
 }
 
@@ -68,6 +92,12 @@ interface LoginState {
     FailedAttempts: number
 }
 
-interface LoginProps {
-
+function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
+    return {
+        setusername: (username: string) => dispatch(actionCreators.setusername(username))
+    }
 }
+
+export const LoginContainer = (connect<RouteComponentProps<{}>, Partial<DispatchProps>, Partial<StateProps>>
+    (null, mapDispatchToProps)(Login) as any);
+

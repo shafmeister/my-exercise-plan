@@ -57,6 +57,10 @@ class UserStatus extends React.Component<Props, LocalState>{
             });
     }
 
+    componentWillReceiveProps() {
+        this.UpdateUserStatus;
+    }
+
     componentDidMount() {
         this.UpdateUserStatus;
     }

@@ -63,7 +63,7 @@ namespace WorkoutTracker.Controllers.Authentication
             {
                 //Attach cookie, create response model and send
                 Response.Cookies.Append("access_token", token);
-                LoginResponseModel SuccessResponse = new LoginResponseModel(true, "");
+                LoginResponseModel SuccessResponse = new LoginResponseModel(true, "", viewModel.Username);
                 return Json(SuccessResponse);
             }
             else

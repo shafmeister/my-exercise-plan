@@ -30,7 +30,7 @@ export const actionCreators = {
 
 
 //REDUCER
-export const reducer: Reducer<UserStatusState> = (state: UserStatusState = initialState, action: KnownAction) => {
+export const reducer: Reducer<UserStatusState> = (state: UserStatusState, action: KnownAction) => {
     switch (action.type) {
         case ('DECREMENT_NOTIFICATIONCOUNT'):
             return Object.assign({}, state, { NotificationCount: state.NotificationCount - 1 }) 
@@ -43,5 +43,5 @@ export const reducer: Reducer<UserStatusState> = (state: UserStatusState = initi
         default:
             const exhaustiveCheck: never = action;
     }
-    return state || Object.assign({}, state, { UserName: '', NotificationCount: 0 }) ;
+    return state || Object.assign({}, state, { Username: '', NotificationCount: 0 }) ;
 }
