@@ -47,22 +47,24 @@ class UserStatus extends React.Component<Props, LocalState>{
         this.ToggleUserDetailsVisibility = this.ToggleUserDetailsVisibility.bind(this);
     }
 
-    UpdateUserStatus(props: Props) {
+    UpdateUserStatus() {
         fetch('api/authentication/getuserinfo', { method: 'GET' })
             .then((response: Response) => response.json())
             .then((data: UserInfoResponse) => {
                 this.props.setusername(data.username);
-                this.props.increment();
                 console.log("Username: " + data.username);
+                console.log(data.notifications[0].title);
             });
     }
 
-    componentWillReceiveProps() {
-        this.UpdateUserStatus;
+    componentWillReceiveProps(nextProps: any) {
+        if (this.props.Username !== nextProps.Username) {
+            this.UpdateUserStatus();
+        }
     }
 
     componentDidMount() {
-        this.UpdateUserStatus;
+        this.UpdateUserStatus();
     }
 
     ToggleNotificationVisibility() {
