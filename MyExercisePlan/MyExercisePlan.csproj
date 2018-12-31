@@ -47,6 +47,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\Application\SiteLayout\components\NotificationPane.tsx" />
+    <None Remove="ClientApp\Application\SiteLayout\types\UserStatusTypes.tsx" />
     <None Remove="ClientApp\components\Counter.tsx" />
     <None Remove="ClientApp\components\FetchData.tsx" />
     <None Remove="ClientApp\routesold.tsx" />
@@ -64,13 +66,14 @@
     <Folder Include="ClientApp\Application\Login\store\" />
     <Folder Include="ClientApp\Application\Register\store\" />
     <Folder Include="ClientApp\Application\Register\types\" />
-    <Folder Include="ClientApp\Application\SiteLayout\types\" />
     <Folder Include="Controllers\NewFolder\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\Application\SiteLayout\components\NotificationPane.tsx" />
     <TypeScriptCompile Include="ClientApp\Application\SiteLayout\store\UserStatus.ts" />
+    <TypeScriptCompile Include="ClientApp\Application\SiteLayout\types\UserStatusTypes.tsx" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

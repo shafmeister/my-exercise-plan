@@ -1,5 +1,7 @@
 ﻿//react
 import * as React from 'react';
+//components
+import { NotificationPane } from './NotificationPane';
 //route objects
 import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
@@ -23,8 +25,6 @@ interface StateProps {
 }
 
 interface DispatchProps {
-    decrement: () => void,
-    increment: () => void,
     setusername: (username: string) => void
 }
 
@@ -99,6 +99,7 @@ class UserStatus extends React.Component<Props, LocalState>{
                     <div className="notification-bell-container" onClick={this.ToggleUserDetailsVisibility}>
                         <img className="notification-bell" src={String(greySettingsGear)} />
                     </div>
+                    <NotificationPane />
                     {
                         this.state.NotificationPaneOpen ? (
                             <div className="notification-pane fade-in-short">
@@ -148,8 +149,6 @@ function mapStateToProps(state: ApplicationState): StateProps {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
     return {
-        decrement: () => dispatch(actionCreators.decrement()),
-        increment: () => dispatch(actionCreators.increment()),
         setusername: (username: string) => dispatch(actionCreators.setusername(username))
     }
 }

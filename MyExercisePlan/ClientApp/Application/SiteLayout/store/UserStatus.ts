@@ -1,47 +1,59 @@
-﻿import { Action, Reducer } from 'redux';
+﻿mport { Action, Reducer } from 'redux';
+import { UserNotification } from '../types/UserStatusTypes';
 
 //STATE
 export interface UserStatusState {
     Username: string,
-    NotificationCount: number
+    UserNotificationCount: number,
+    UserNotifications: UserNotification[],
+    NotificationPaneIsOpen: boolean,
+    UserPaneIsOpen: boolean
 }
 
 //
-const initialState = { Username: '', NotificationCount: 0}
+const initialState = {
+    Username: '',
+    UserNotificationCount: 0,
+    UserNotifications: [],
+    NotificationPaneIsOpen: false,
+    UserPaneIsOpen: false
+}
 
 //ACTIONS
-interface DecrementNotificationAction { type: 'DECREMENT_NOTIFICATIONCOUNT' }
-interface IncrementNotificationAction { type: 'INCREMENT_NOTIFICATIONCOUNT' }
-interface ClearNotificationAction { type: 'CLEAR_NOTIFICATIONCOUNT' }
+interface ClearNotificationAction { type: 'CLEAR_NOTIFICATION', NotificationId: number }
 interface SetUsernameAction { type: 'SET_USERNAME', username: string }
 
 
 //Known action type, to exclude unknown action calls
-type KnownAction = DecrementNotificationAction | IncrementNotificationAction | ClearNotificationAction | SetUsernameAction;
+type KnownAction = ClearNotificationAction | SetUsernameAction;
 
 
 //ACTION CREATORS
 export const actionCreators = {
-    decrement: () => <DecrementNotificationAction>{ type: 'DECREMENT_NOTIFICATIONCOUNT' },
-    increment: () => <IncrementNotificationAction>{ type: 'INCREMENT_NOTIFICATIONCOUNT' },
-    clear: () => <ClearNotificationAction>{ type: 'CLEAR_NOTIFICATIONCOUNT' },
+    clearNotification: (NotificationId: number) => <ClearNotificationAction>{ type: 'CLEAR_NOTIFICATION', NotificationId },
     setusername: (username: string) => <SetUsernameAction>{ type: 'SET_USERNAME', username }
 }
 
 
 //REDUCER
-export const reducer: Reducer<UserStatusState> = (state: UserStatusState, action: KnownAction) => {
+export const reducer: Reducer<UserStatusState> = (state: UserStatusState = initialState, action: KnownAction) => {
     switch (action.type) {
-        case ('DECREMENT_NOTIFICATIONCOUNT'):
-            return Object.assign({}, state, { NotificationCount: state.NotificationCount - 1 }) 
-        case ('INCREMENT_NOTIFICATIONCOUNT'):
-            return Object.assign({}, state, { NotificationCount: state.NotificationCount + 1 }) 
-        case ('CLEAR_NOTIFICATIONCOUNT'):
-            return Object.assign({}, state, { NotificationCount: 0 }) 
+        case ('CLEAR_NOTIFICATION'):
+            for (var i = 0; i < state.UserNotifications.length; i++) {
+                if (state.UserNotifications[i].NotificationId === action.NotificationId) {
+                    return Object.assign({}, state, {
+                        UserNotifications: [
+                            state.UserNotifications.slice(0, i),
+                            state.UserNotifications.slice(i, state.UserNotifications.length)
+                        ]
+                    });
+                }
+            }
+            return null
         case ('SET_USERNAME'):
-            return Object.assign({}, state, {Username: action.username})
+            return Object.assign({}, state, { Username: action.username })
         default:
             const exhaustiveCheck: never = action;
     }
-    return state || Object.assign({}, state, { Username: '', NotificationCount: 0 }) ;
+    return state || Object.assign({}, state, { Username: '', NotificationCount: 0 });
 }
