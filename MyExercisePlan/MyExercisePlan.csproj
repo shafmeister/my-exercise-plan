@@ -47,6 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\Application\SiteLayout\components\DetailsPane.tsx" />
     <None Remove="ClientApp\Application\SiteLayout\components\NotificationPane.tsx" />
     <None Remove="ClientApp\Application\SiteLayout\types\UserStatusTypes.tsx" />
     <None Remove="ClientApp\components\Counter.tsx" />
@@ -71,6 +72,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\Application\SiteLayout\components\DetailsPane.tsx" />
     <TypeScriptCompile Include="ClientApp\Application\SiteLayout\components\NotificationPane.tsx" />
     <TypeScriptCompile Include="ClientApp\Application\SiteLayout\store\UserStatus.ts" />
     <TypeScriptCompile Include="ClientApp\Application\SiteLayout\types\UserStatusTypes.tsx" />

@@ -1,4 +1,4 @@
-﻿mport { Action, Reducer } from 'redux';
+﻿import { Action, Reducer } from 'redux';
 import { UserNotification } from '../types/UserStatusTypes';
 
 //STATE
@@ -20,24 +20,30 @@ const initialState = {
 }
 
 //ACTIONS
+interface ClearUsernameAction { type: 'CLEAR_USERNAME' }
 interface ClearNotificationAction { type: 'CLEAR_NOTIFICATION', NotificationId: number }
 interface SetUsernameAction { type: 'SET_USERNAME', username: string }
 
 
 //Known action type, to exclude unknown action calls
-type KnownAction = ClearNotificationAction | SetUsernameAction;
+type KnownAction = ClearNotificationAction | SetUsernameAction | ClearUsernameAction;
 
 
 //ACTION CREATORS
 export const actionCreators = {
-    clearNotification: (NotificationId: number) => <ClearNotificationAction>{ type: 'CLEAR_NOTIFICATION', NotificationId },
-    setusername: (username: string) => <SetUsernameAction>{ type: 'SET_USERNAME', username }
+    clearnotification: (NotificationId: number) => <ClearNotificationAction>{ type: 'CLEAR_NOTIFICATION', NotificationId },
+    setusername: (username: string) => <SetUsernameAction>{ type: 'SET_USERNAME', username },
+    clearusername: () => <SetUsernameAction>{ type: 'SET_USERNAME' }
 }
 
 
 //REDUCER
 export const reducer: Reducer<UserStatusState> = (state: UserStatusState = initialState, action: KnownAction) => {
     switch (action.type) {
+        case ('SET_USERNAME'):
+            return Object.assign({}, state, { Username: action.username })
+        case ('CLEAR_USERNAME'):
+            return Object.assign({}, state, { Username: '' })
         case ('CLEAR_NOTIFICATION'):
             for (var i = 0; i < state.UserNotifications.length; i++) {
                 if (state.UserNotifications[i].NotificationId === action.NotificationId) {
@@ -49,11 +55,9 @@ export const reducer: Reducer<UserStatusState> = (state: UserStatusState = initi
                     });
                 }
             }
-            return null
-        case ('SET_USERNAME'):
-            return Object.assign({}, state, { Username: action.username })
+            return state
         default:
             const exhaustiveCheck: never = action;
     }
-    return state || Object.assign({}, state, { Username: '', NotificationCount: 0 });
+    return state || Object.assign({}, state, initialState);
 }

@@ -2,6 +2,7 @@
 import * as React from 'react';
 //components
 import { NotificationPane } from './NotificationPane';
+import { DetailsPane } from './DetailsPane'
 //route objects
 import { RouteComponentProps } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
@@ -21,11 +22,13 @@ export interface OwnProps {
 
 interface StateProps {
     Username: string,
-    NotificationCount: number
+    UserNotificationCount: number
 }
 
 interface DispatchProps {
-    setusername: (username: string) => void
+    setusername: (username: string) => void,
+    clearusername: () => void,
+    clearnotification: (NotificationId: number) => void
 }
 
 interface LocalState {
@@ -92,23 +95,15 @@ class UserStatus extends React.Component<Props, LocalState>{
                         <img className="notification-bell" src={String(notificationBell)} />
                         <div className="notification-circle">
                             <span className="notification-number-container">
-                                {this.props.NotificationCount}
+                                {this.props.UserNotificationCount}
                             </span>
                         </div>
                     </div>
                     <div className="notification-bell-container" onClick={this.ToggleUserDetailsVisibility}>
                         <img className="notification-bell" src={String(greySettingsGear)} />
                     </div>
-                    <NotificationPane />
-                    {
-                        this.state.NotificationPaneOpen ? (
-                            <div className="notification-pane fade-in-short">
-                            </div>
-                        ) : (
-                                <div className="notification-pane hidden">
-                                </div>
-                            )
-                    }
+                    <NotificationPane IsOpen={this.state.NotificationPaneOpen} />
+                    <DetailsPane IsOpen={this.state.UserDetailsPaneOpen} />
                 </div>
             )
         }
@@ -143,13 +138,15 @@ interface UserNotification {
 function mapStateToProps(state: ApplicationState): StateProps {
     return {
         Username: state.userStatus.Username,
-        NotificationCount: state.userStatus.NotificationCount
+        UserNotificationCount: state.userStatus.UserNotificationCount
     }
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
     return {
-        setusername: (username: string) => dispatch(actionCreators.setusername(username))
+        setusername: (username: string) => dispatch(actionCreators.setusername(username)),
+        clearusername: () => dispatch(actionCreators.clearusername()),
+        clearnotification: (NotificationId: number) => dispatch(actionCreators.clearnotification(NotificationId))
     }
 }
 

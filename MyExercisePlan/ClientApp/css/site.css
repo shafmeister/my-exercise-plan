@@ -315,4 +315,17 @@ body {
     -o-transition: opacity 2s;
 }
 
+.details-pane {
+    background-color: blue;
+    width: 250px;
+    height: 150px;
+    position: absolute;
+    z-index: 2;
+    top: 50px;
+    right: 0px;
+    transition: opacity 2s;
+    -webkit-transition: opacity 2s;
+    -moz-transition: opacity 2s;
+    -o-transition: opacity 2s;
+}
 

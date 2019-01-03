@@ -7,7 +7,6 @@ import { ApplicationState } from '../../../store';
 import { UserStatusState, actionCreators } from '../store/UserStatus';
 import { RouteComponentProps } from 'react-router';
 //types
-import { UserNotification } from '../types/UserStatusTypes'
 
 interface OwnProps {
     IsOpen: boolean
@@ -29,7 +28,7 @@ type Props = OwnProps & StoreProps & DispatchProps;
 
 type State = LocalState;
 
-export class NotificationPane extends React.Component<Props, State>{
+export class DetailsPane extends React.Component<Props, State>{
     constructor(props: Props){
         super(props);
     }
@@ -37,10 +36,10 @@ export class NotificationPane extends React.Component<Props, State>{
     render() {
         return (
             this.props.IsOpen ? (
-                <div className="notification-pane fade-in-short">
+                <div className="details-pane fade-in-short">
                 </div>
             ) : (
-                    <div className="notification-pane hidden">
+                    <div className="details-pane hidden">
                     </div>
                 )
         )
