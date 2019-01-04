@@ -15,6 +15,7 @@ import { UserStatusState, actionCreators } from '../store/UserStatus';
 var notificationBell = require('../../../assets/images/notificationBell.jpg');
 var greySettingsGear = require('../../../assets/images/greySettingsGear.png');
 //types
+import { UserNotification } from '../types/UserStatusTypes';
 
 export interface OwnProps {
 
@@ -29,6 +30,7 @@ interface DispatchProps {
     setusername: (username: string) => void,
     clearusername: () => void,
     clearnotification: (NotificationId: number) => void
+    setnotifications: (Notifications: UserNotification[]) => void
 }
 
 interface LocalState {
@@ -55,8 +57,7 @@ class UserStatus extends React.Component<Props, LocalState>{
             .then((response: Response) => response.json())
             .then((data: UserInfoResponse) => {
                 this.props.setusername(data.username);
-                console.log("Username: " + data.username);
-                console.log(data.notifications[0].title);
+                this.props.setnotifications(data.notifications);
             });
     }
 
@@ -128,13 +129,6 @@ interface UserInfoResponse {
     notifications: UserNotification[]
 }
 
-interface UserNotification {
-    userNotificationID: number,
-    title: string,
-    description: string,
-    severity: number
-}
-
 function mapStateToProps(state: ApplicationState): StateProps {
     return {
         Username: state.userStatus.Username,
@@ -144,9 +138,10 @@ function mapStateToProps(state: ApplicationState): StateProps {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
     return {
-        setusername: (username: string) => dispatch(actionCreators.setusername(username)),
         clearusername: () => dispatch(actionCreators.clearusername()),
-        clearnotification: (NotificationId: number) => dispatch(actionCreators.clearnotification(NotificationId))
+        clearnotification: (NotificationId: number) => dispatch(actionCreators.clearnotification(NotificationId)),
+        setusername: (username: string) => dispatch(actionCreators.setusername(username)),
+        setnotifications: (Notifications: UserNotification[]) => dispatch(actionCreators.setnotifications(Notifications))
     }
 }
 

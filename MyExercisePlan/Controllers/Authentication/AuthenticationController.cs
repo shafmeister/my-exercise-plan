@@ -31,9 +31,13 @@ namespace WorkoutTracker.Controllers.Authentication
                 string Username = TokenAuthority.GetTokenClaims(accessToken);
                 if(Username != null)
                 {
-                    UserNotification notification = new UserNotification(1, "Test", "This is a test", 3);
+                    UserNotification notification1 = new UserNotification(1, "Test1", "This is a test1", 1);
+                    UserNotification notification2 = new UserNotification(2, "Test2", "This is a test2", 2);
+                    UserNotification notification3 = new UserNotification(3, "Test3", "This is a test3", 3);
                     List<UserNotification> notificationList = new List<UserNotification>();
-                    notificationList.Add(notification);
+                    notificationList.Add(notification1);
+                    notificationList.Add(notification2);
+                    notificationList.Add(notification3);
                     UserinfoResponseModel SuccessResponse = new UserinfoResponseModel(true, Username, notificationList);
                     return Json(SuccessResponse);
                 }

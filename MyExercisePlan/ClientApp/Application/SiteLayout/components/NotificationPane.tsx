@@ -14,7 +14,7 @@ interface OwnProps {
 }
 
 interface StoreProps {
-
+    UserNotifications: UserNotification[]
 }
 
 interface DispatchProps {
@@ -38,6 +38,7 @@ export class NotificationPane extends React.Component<Props, State>{
         return (
             this.props.IsOpen ? (
                 <div className="notification-pane fade-in-short">
+                    <Notifications {Notifications = this.props.UserNotifications}/>
                 </div>
             ) : (
                     <div className="notification-pane hidden">

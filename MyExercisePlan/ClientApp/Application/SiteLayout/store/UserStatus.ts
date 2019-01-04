@@ -20,20 +20,23 @@ const initialState = {
 }
 
 //ACTIONS
-interface ClearUsernameAction { type: 'CLEAR_USERNAME' }
 interface ClearNotificationAction { type: 'CLEAR_NOTIFICATION', NotificationId: number }
+interface ClearUsernameAction { type: 'CLEAR_USERNAME' }
+interface SetNotificationsAction { type: 'SET_NOTIFICATIONS', UserNotifications: UserNotification[] }
 interface SetUsernameAction { type: 'SET_USERNAME', username: string }
 
 
 //Known action type, to exclude unknown action calls
-type KnownAction = ClearNotificationAction | SetUsernameAction | ClearUsernameAction;
+type KnownAction = ClearNotificationAction | ClearUsernameAction | SetNotificationsAction | SetUsernameAction;
 
 
 //ACTION CREATORS
 export const actionCreators = {
     clearnotification: (NotificationId: number) => <ClearNotificationAction>{ type: 'CLEAR_NOTIFICATION', NotificationId },
+    clearusername: () => <ClearUsernameAction>{ type: 'CLEAR_USERNAME' },
+    setnotifications: (UserNotifications: UserNotification[]) => <SetNotificationsAction>{ type: 'SET_NOTIFICATIONS', UserNotifications },
     setusername: (username: string) => <SetUsernameAction>{ type: 'SET_USERNAME', username },
-    clearusername: () => <SetUsernameAction>{ type: 'SET_USERNAME' }
+    
 }
 
 
@@ -42,6 +45,8 @@ export const reducer: Reducer<UserStatusState> = (state: UserStatusState = initi
     switch (action.type) {
         case ('SET_USERNAME'):
             return Object.assign({}, state, { Username: action.username })
+        case ('SET_NOTIFICATIONS'):
+            return Object.assign({}, state, { UserNotifications: action.UserNotifications } )
         case ('CLEAR_USERNAME'):
             return Object.assign({}, state, { Username: '' })
         case ('CLEAR_NOTIFICATION'):
