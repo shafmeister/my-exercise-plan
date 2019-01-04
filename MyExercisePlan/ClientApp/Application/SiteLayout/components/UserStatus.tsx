@@ -1,7 +1,7 @@
 ﻿//react
 import * as React from 'react';
 //components
-import { NotificationPane } from './NotificationPane';
+import { NotificationPaneContainer } from './NotificationPane';
 import { DetailsPane } from './DetailsPane'
 //route objects
 import { RouteComponentProps } from 'react-router';
@@ -103,7 +103,7 @@ class UserStatus extends React.Component<Props, LocalState>{
                     <div className="notification-bell-container" onClick={this.ToggleUserDetailsVisibility}>
                         <img className="notification-bell" src={String(greySettingsGear)} />
                     </div>
-                    <NotificationPane IsOpen={this.state.NotificationPaneOpen} />
+                    <NotificationPaneContainer IsOpen={this.state.NotificationPaneOpen} />
                     <DetailsPane IsOpen={this.state.UserDetailsPaneOpen} />
                 </div>
             )
