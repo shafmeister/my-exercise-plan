@@ -18,7 +18,8 @@ interface StoreProps {
 }
 
 interface DispatchProps {
-    clearnotification: (NotificationId: number) => void
+    clearnotification: (NotificationId: number) => void,
+    clearnotificationall: () => void
 }
 
 interface LocalState {
@@ -32,14 +33,16 @@ type State = LocalState;
 export class NotificationPane extends React.Component<Props, State>{
     constructor(props: Props){
         super(props);
+
     }
 
     render() {
         return (
             this.props.IsOpen
                 ? (
-                <div className="notification-pane fade-in-short">
-                    <Notifications UserNotifications={this.props.UserNotifications}/>
+                    <div className="notification-pane scrollbar fade-in-short">
+                        <button onClick={this.props.clearnotificationall}>Clear all</button>
+                        <Notifications UserNotifications={this.props.UserNotifications} ClearNotification={this.props.clearnotification} />
                 </div>
                 ) : (
                 <div className="notification-pane hidden">
@@ -50,7 +53,8 @@ export class NotificationPane extends React.Component<Props, State>{
 }
 
 interface NotificationsProps{
-    UserNotifications: UserNotification[]
+    UserNotifications: UserNotification[],
+    ClearNotification: (NotificationId: number) => void
 }
 
 class Notifications extends React.Component<NotificationsProps>{
@@ -61,8 +65,9 @@ class Notifications extends React.Component<NotificationsProps>{
     }
 
     MapNotifications(Notifications: any) {
-        var NotificationList = Notifications.map((Notification: any) =>
+        var NotificationList = Notifications.map((Notification: UserNotification) =>
             <div key={Notification.userNotificationID} >
+                <button onClick={() => this.props.ClearNotification(Notification.userNotificationID)}>X</button>
                 {Notification.isActive}<br />
                 {Notification.title}<br/>
                 {Notification.description}
@@ -90,7 +95,8 @@ function mapStateToProps(state: ApplicationState): StoreProps {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<any>): DispatchProps {
     return {
-        clearnotification: (NotificationId: number) => dispatch(actionCreators.clearnotification(NotificationId))
+        clearnotification: (NotificationId: number) => dispatch(actionCreators.clearnotification(NotificationId)),
+        clearnotificationall: () => dispatch(actionCreators.clearnotificationall())
     }
 }
 

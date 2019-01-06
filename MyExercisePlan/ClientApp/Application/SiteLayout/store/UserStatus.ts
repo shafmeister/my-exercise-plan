@@ -21,20 +21,22 @@ const initialState = {
 
 //ACTIONS
 interface ClearNotificationAction { type: 'CLEAR_NOTIFICATION', NotificationId: number }
+interface ClearNotificationAllAction { type: 'CLEAR_NOTIFICATION_ALL' }
 interface ClearUsernameAction { type: 'CLEAR_USERNAME' }
-interface SetNotificationsAction { type: 'SET_NOTIFICATIONS', UserNotifications: UserNotification[] }
+interface SetNotificationsAction { type: 'SET_NOTIFICATION_ALL', UserNotifications: UserNotification[] }
 interface SetUsernameAction { type: 'SET_USERNAME', username: string }
 
 
 //Known action type, to exclude unknown action calls
-type KnownAction = ClearNotificationAction | ClearUsernameAction | SetNotificationsAction | SetUsernameAction;
+type KnownAction = ClearNotificationAction | ClearNotificationAllAction | ClearUsernameAction | SetNotificationsAction | SetUsernameAction;
 
 
 //ACTION CREATORS
 export const actionCreators = {
     clearnotification: (NotificationId: number) => <ClearNotificationAction>{ type: 'CLEAR_NOTIFICATION', NotificationId },
+    clearnotificationall: () => <ClearNotificationAllAction>{ type: 'CLEAR_NOTIFICATION_ALL' },
     clearusername: () => <ClearUsernameAction>{ type: 'CLEAR_USERNAME' },
-    setnotifications: (UserNotifications: UserNotification[]) => <SetNotificationsAction>{ type: 'SET_NOTIFICATIONS', UserNotifications },
+    setnotifications: (UserNotifications: UserNotification[]) => <SetNotificationsAction>{ type: 'SET_NOTIFICATION_ALL', UserNotifications },
     setusername: (username: string) => <SetUsernameAction>{ type: 'SET_USERNAME', username },
     
 }
@@ -43,24 +45,30 @@ export const actionCreators = {
 //REDUCER
 export const reducer: Reducer<UserStatusState> = (state: UserStatusState = initialState, action: KnownAction) => {
     switch (action.type) {
-        case ('SET_USERNAME'):
-            return Object.assign({}, state, { Username: action.username })
-        case ('SET_NOTIFICATIONS'):
-            return Object.assign({}, state, { UserNotifications: action.UserNotifications } )
-        case ('CLEAR_USERNAME'):
-            return Object.assign({}, state, { Username: '' })
+        case ('CLEAR_NOTIFICATION_ALL'):
+            return Object.assign({}, state, { UserNotifications: [] })
         case ('CLEAR_NOTIFICATION'):
             for (var i = 0; i < state.UserNotifications.length; i++) {
-                if (state.UserNotifications[i].NotificationId === action.NotificationId) {
+                if (state.UserNotifications[i].userNotificationID === action.NotificationId) {
                     return Object.assign({}, state, {
                         UserNotifications: [
-                            state.UserNotifications.slice(0, i),
-                            state.UserNotifications.slice(i, state.UserNotifications.length)
-                        ]
+                            ...state.UserNotifications.slice(0, i),
+                            ...state.UserNotifications.slice(i + 1, state.UserNotifications.length)
+                        ],
+                        UserNotificationCount: state.UserNotifications.length - 1
                     });
                 }
             }
             return state
+        case ('CLEAR_USERNAME'):
+            return Object.assign({}, state, { Username: '' })
+        case ('SET_USERNAME'):
+            return Object.assign({}, state, { Username: action.username })
+        case ('SET_NOTIFICATION_ALL'):
+            return Object.assign({}, state, {
+                UserNotifications: action.UserNotifications,
+                UserNotificationCount: action.UserNotifications.length
+            })
         default:
             const exhaustiveCheck: never = action;
     }

@@ -1,6 +1,6 @@
 ﻿export interface UserNotification {
-    NotificationId: number,
-    Title: string,
-    Description: string,
-    IsActive: boolean
+    userNotificationID: number,
+    title: string,
+    description: string,
+    isActive: boolean
 } 
