@@ -46,7 +46,7 @@ export const actionCreators = {
 export const reducer: Reducer<UserStatusState> = (state: UserStatusState = initialState, action: KnownAction) => {
     switch (action.type) {
         case ('CLEAR_NOTIFICATION_ALL'):
-            return Object.assign({}, state, { UserNotifications: [] })
+            return Object.assign({}, state, { UserNotifications: [], UserNotificationCount: 0 })
         case ('CLEAR_NOTIFICATION'):
             for (var i = 0; i < state.UserNotifications.length; i++) {
                 if (state.UserNotifications[i].userNotificationID === action.NotificationId) {
