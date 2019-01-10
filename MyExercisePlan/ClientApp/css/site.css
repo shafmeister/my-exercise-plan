@@ -343,3 +343,30 @@ body {
 .scrollbar::-webkit-scrollbar-thumb {
     background-color: #000000;
 }
+
+.notification-item {
+    width: 240px;
+    float: left;
+    margin: 5px 0px 5px 0px; 
+    padding: 5px;
+}
+
+.notification-pane button {
+    float: right;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    overflow:hidden;
+    outline: none;
+    margin: 0px;
+}
+
+.notification-item span {
+    float: left;
+    text-align: left;
+}
+
+.title-small{
+    font-size: 1.25em;
+    line-height: 15px;
+}

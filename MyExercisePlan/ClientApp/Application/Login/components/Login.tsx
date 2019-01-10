@@ -38,7 +38,7 @@ class Login extends React.Component<Props, LoginState> {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        fetch('api/authentication/login', { method: 'POST', body: data })
+        fetch('api/authentication/login', { method: 'POST', body: data, credentials: 'same-origin' })
             .then((response: Response) => response.json()) // Transform the data into json
                 .then((data: LoginResponse) => {
                     console.log(data);

@@ -66,11 +66,10 @@ class Notifications extends React.Component<NotificationsProps>{
 
     MapNotifications(Notifications: any) {
         var NotificationList = Notifications.map((Notification: UserNotification) =>
-            <div key={Notification.userNotificationID} >
+            <div key={Notification.userNotificationID} className='notification-item'>
                 <button onClick={() => this.props.ClearNotification(Notification.userNotificationID)}>X</button>
-                {Notification.isActive}<br />
-                {Notification.title}<br/>
-                {Notification.description}
+                <span className="title-small">{Notification.title}</span><br/>
+                <span>{Notification.description}</span>
             </div>
         )
         return NotificationList

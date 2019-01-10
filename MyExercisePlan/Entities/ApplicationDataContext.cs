@@ -7,14 +7,14 @@ namespace MyExercisePlan.Entities
     public partial class ApplicationDataContext : DbContext
     {
         public virtual DbSet<U1User> U1User { get; set; }
-        public virtual DbSet<U1UserAccess> U1UserAccess { get; set; }
+        public virtual DbSet<U1UserNotification> U1UserNotification { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=WorkoutPlan;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=WorkoutPlan;Integrated Security=True;");
             }
         }
 
@@ -68,18 +68,36 @@ namespace MyExercisePlan.Entities
                 entity.Property(e => e.UserAccessId).HasColumnName("USER_ACCESS_ID");
 
                 entity.Property(e => e.Username)
+                    .IsRequired()
                     .HasColumnName("USERNAME")
                     .HasMaxLength(255)
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<U1UserAccess>(entity =>
+            modelBuilder.Entity<U1UserNotification>(entity =>
             {
-                entity.HasKey(e => e.UserAccessId);
+                entity.HasKey(e => e.UserNotificationId);
 
-                entity.ToTable("U1_USER_ACCESS");
+                entity.ToTable("U1_USER_NOTIFICATION");
 
-                entity.Property(e => e.UserAccessId).HasColumnName("USER_ACCESS_ID");
+                entity.Property(e => e.UserNotificationId).HasColumnName("USER_NOTIFICATION_ID");
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("DESCRIPTION")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
+
+                entity.Property(e => e.Severity).HasColumnName("SEVERITY");
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasColumnName("TITLE")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserId).HasColumnName("USER_ID");
             });
         }
     }

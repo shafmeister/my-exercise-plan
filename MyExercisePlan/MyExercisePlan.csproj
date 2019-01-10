@@ -67,7 +67,6 @@
     <Folder Include="ClientApp\Application\Login\store\" />
     <Folder Include="ClientApp\Application\Register\store\" />
     <Folder Include="ClientApp\Application\Register\types\" />
-    <Folder Include="Controllers\NewFolder\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

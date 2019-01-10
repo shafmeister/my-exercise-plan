@@ -21,41 +21,6 @@ namespace WorkoutTracker.Controllers.Authentication
     {
         private UserManager _userManager = new UserManager();
 
-        // GET: login/auth
-        [HttpGet("getuserinfo")]
-        public JsonResult GetUserInfo()
-        {
-            string accessToken = Request.Cookies["access_token"];
-            if (accessToken != null)
-            {
-                string Username = TokenAuthority.GetTokenClaims(accessToken);
-                if(Username != null)
-                {
-                    UserNotification notification1 = new UserNotification(1, "Test1", "This is a test1", 1);
-                    UserNotification notification2 = new UserNotification(2, "Test2", "This is a test2", 2);
-                    UserNotification notification3 = new UserNotification(3, "Test3", "This is a test3", 3);
-                    List<UserNotification> notificationList = new List<UserNotification>();
-                    notificationList.Add(notification1);
-                    notificationList.Add(notification2);
-                    notificationList.Add(notification3);
-                    UserinfoResponseModel SuccessResponse = new UserinfoResponseModel(true, Username, notificationList);
-                    return Json(SuccessResponse);
-                }
-                else
-                {
-                    UserinfoResponseModel AuthenticationFailureResponse = new UserinfoResponseModel(false, "", null);
-                    return Json(AuthenticationFailureResponse);
-                }
-            }
-            else
-            {
-                UserinfoResponseModel NoTokenResponse = new UserinfoResponseModel(false, "", null);
-                return Json(NoTokenResponse);
-            }
-
-            
-        }
-
         // GET api/login/login
         [HttpPost("login")]
         public JsonResult Login(LoginViewModel viewModel)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using MyExercisePlan.Entities;
 
 namespace MyExercisePlan.Entities
 {
@@ -14,11 +13,11 @@ namespace MyExercisePlan.Entities
         public string Firstname { get; set; }
         public string Middlename { get; set; }
         public string Lastname { get; set; }
-        public string Email { get; set; }
-        public string State { get; set; }
         public string City { get; set; }
-        public int? FailedAttempts { get; set; }
+        public string State { get; set; }
+        public string Email { get; set; }
         public int? UserAccessId { get; set; }
+        public int? FailedAttempts { get; set; }
 
         public U1User(int userid, string username, string password, string firstname, string middlename, string lastname, string state, string city)
         {

@@ -53,12 +53,14 @@ class UserStatus extends React.Component<Props, LocalState>{
     }
 
     UpdateUserStatus() {
-        fetch('api/authentication/getuserinfo', { method: 'GET' })
-            .then((response: Response) => response.json())
-            .then((data: UserInfoResponse) => {
+        fetch('api/user/getuserinfo', { method: 'GET', credentials: 'same-origin' })
+            .then((response: any) => response.text())
+            .then(text => console.log(text))
+            /*.then((data: UserInfoResponse) => {
                 this.props.setusername(data.username);
                 this.props.setnotifications(data.notifications);
             });
+            */
     }
 
     componentWillReceiveProps(nextProps: any) {

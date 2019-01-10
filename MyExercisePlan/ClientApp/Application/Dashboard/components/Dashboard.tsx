@@ -9,11 +9,13 @@ export class Dashboard extends React.Component<RouteComponentProps<{}>, {}> {
     }
 
     GetDashboardData() {
-        fetch('api/dashboard/test', { method: 'GET', credentials: 'include' })
-            .then((response: Response) => response.json()) // Transform the data into json
-            .then((data: DashboardResponse) => {
-                console.log(data);
-            });
+        fetch('api/dashboard/test', { method: 'GET', credentials: 'same-origin' })
+            .then((response: any) => response.text())
+            .then((text) => console.log(text));
+        //.then((response: Response) => response.json()) // Transform the data into json
+            //.then((data: DashboardResponse) => {
+            //    console.log(data);
+            //});
     }
 
     componentDidMount() {
