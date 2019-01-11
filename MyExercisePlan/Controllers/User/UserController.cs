@@ -16,6 +16,7 @@ namespace MyExercisePlan.Controllers.User
     public class UserController : Controller
     {
         private UserManager _userManager = new UserManager();
+        private NotificationManager _notificationManager = new NotificationManager();
 
         // GET: login/auth
         [HttpGet("getuserinfo")]
@@ -27,16 +28,9 @@ namespace MyExercisePlan.Controllers.User
                 string Username = TokenAuthority.GetTokenClaims(accessToken);
                 if (Username != null)
                 {
+                    List<ApplicationNotification> notificationList = _notificationManager.GetApplicationNotifications(Username);
                     
-                    //ApplicationNotification notification1 = new ApplicationNotification(1, "Test1", "This is a test1, a really good test. Hopefully it works. I bet it will.", 1);
-                    //ApplicationNotification notification2 = new ApplicationNotification(2, "Test2", "This is a test2", 2);
-                    ApplicationNotification notification3 = new ApplicationNotification(3, "Test3", "This is a test3", 3);
-                    List<ApplicationNotification> notificationList = new List<ApplicationNotification>();
-                    //notificationList.Add(notification1);
-                    //notificationList.Add(notification2);
-                    notificationList.Add(notification3);
-                    
-                    UserinfoResponseModel SuccessResponse = new UserinfoResponseModel(true, Username, null);
+                    UserinfoResponseModel SuccessResponse = new UserinfoResponseModel(true, Username, notificationList);
                     return Json(SuccessResponse);
                     
                 }

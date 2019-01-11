@@ -11,5 +11,15 @@ namespace MyExercisePlan.Entities
         public string Description { get; set; }
         public int Severity { get; set; }
         public bool IsActive { get; set; }
+
+        public U1UserNotification(int userNotificationId, int userId, string title, string description, int severity, bool isActive)
+        {
+            UserNotificationId = userNotificationId;
+            UserId = userId;
+            Title = title;
+            Description = description;
+            Severity = severity;
+            IsActive = isActive;
+        }
     }
 }

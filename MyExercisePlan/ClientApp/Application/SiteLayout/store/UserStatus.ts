@@ -62,13 +62,13 @@ export const reducer: Reducer<UserStatusState> = (state: UserStatusState = initi
             return state
         case ('CLEAR_USERNAME'):
             return Object.assign({}, state, { Username: '' })
-        case ('SET_USERNAME'):
-            return Object.assign({}, state, { Username: action.username })
         case ('SET_NOTIFICATION_ALL'):
             return Object.assign({}, state, {
                 UserNotifications: action.UserNotifications,
                 UserNotificationCount: action.UserNotifications.length
             })
+        case ('SET_USERNAME'):
+            return Object.assign({}, state, { Username: action.username })
         default:
             const exhaustiveCheck: never = action;
     }
