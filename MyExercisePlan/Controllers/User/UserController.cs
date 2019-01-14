@@ -46,5 +46,7 @@ namespace MyExercisePlan.Controllers.User
                 return Json(NoTokenResponse);
             }
         }
+
+        [HttpGet("")]
     }
 }

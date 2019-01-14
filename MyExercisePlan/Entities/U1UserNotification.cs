@@ -21,5 +21,10 @@ namespace MyExercisePlan.Entities
             Severity = severity;
             IsActive = isActive;
         }
+
+        public U1UserNotification()
+        {
+
+        }
     }
 }
