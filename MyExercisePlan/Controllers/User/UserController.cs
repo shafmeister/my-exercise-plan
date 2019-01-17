@@ -32,7 +32,6 @@ namespace MyExercisePlan.Controllers.User
                     
                     UserinfoResponseModel SuccessResponse = new UserinfoResponseModel(true, Username, notificationList);
                     return Json(SuccessResponse);
-                    
                 }
                 else
                 {
@@ -47,6 +46,40 @@ namespace MyExercisePlan.Controllers.User
             }
         }
 
-        [HttpGet("")]
+        [HttpPost("clearnotification")]
+        public JsonResult ClearNotification([FromBody]ClearNotificationViewModel viewModel)
+        {
+            string accessToken = Request.Cookies["access_token"];
+            if (accessToken != null)
+            {
+                string Username = TokenAuthority.GetTokenClaims(accessToken);
+                if (Username != null)
+                {
+
+                    bool SuccessfullyCleared = _notificationManager.ClearNotification(Username, viewModel.UserNotificationId);
+
+                    if (SuccessfullyCleared)
+                    {
+                        ClearNotificationResponseModel ClearSuccessResponse = new ClearNotificationResponseModel(true, "");
+                        return Json(ClearSuccessResponse);
+                    }
+                    else
+                    {
+                        ClearNotificationResponseModel ClearSuccessResponse = new ClearNotificationResponseModel(true, "");
+                        return Json(ClearSuccessResponse);
+                    }
+                }
+                else
+                {
+                    ClearNotificationResponseModel AuthenticationFailureResponse = new ClearNotificationResponseModel(false, "");
+                    return Json(AuthenticationFailureResponse);
+                }
+            }
+            else
+            {
+                ClearNotificationResponseModel NoTokenResponse = new ClearNotificationResponseModel(false, "");
+                return Json(NoTokenResponse);
+            }
+        }
     }
 }

@@ -57,17 +57,41 @@ interface NotificationsProps{
     ClearNotification: (NotificationId: number) => void
 }
 
+interface ClearNotificationResponse {
+    clearSuccess: boolean,
+    responseMessage: string
+}
+
 class Notifications extends React.Component<NotificationsProps>{
     constructor(props: NotificationsProps) {
         super(props);
 
         this.MapNotifications = this.MapNotifications.bind(this);
+        this.HandleClearNotification = this.HandleClearNotification.bind(this);
+    }
+
+    HandleClearNotification(UserNotificationId: number) {
+        this.props.ClearNotification(UserNotificationId);
+
+        const data = JSON.stringify({ "UserNotificationId": UserNotificationId });
+        console.log(data);
+        fetch('api/user/clearnotification', {
+            method: 'POST',
+            body: data,
+            headers: new Headers({ 'content-type': 'application/json' }),
+            credentials: 'same-origin'
+        })
+            .then((response: any) => response.json())
+            .then((response: ClearNotificationResponse) => {
+                console.log(response);
+                console.log(response.responseMessage);
+            });
     }
 
     MapNotifications(Notifications: any) {
         var NotificationList = Notifications.map((Notification: UserNotification) =>
             <div key={Notification.userNotificationID} className='notification-item'>
-                <button onClick={() => this.props.ClearNotification(Notification.userNotificationID)}>X</button>
+                <button onClick={() => this.HandleClearNotification(Notification.userNotificationID)}>X</button>
                 <span className="title-small">{Notification.title}</span><br/>
                 <span>{Notification.description}</span>
             </div>

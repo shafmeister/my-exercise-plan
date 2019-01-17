@@ -59,7 +59,6 @@ class UserStatus extends React.Component<Props, LocalState>{
                 this.props.setusername(data.username);
                 this.props.setnotifications(data.notifications);
             });
-            
     }
 
     componentWillReceiveProps(nextProps: any) {
